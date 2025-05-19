@@ -1,0 +1,63 @@
+
+
+*** arrange LL in form of zig zag ***
+*** Time complexity : O(N)
+*** Space complexity : O(1)
+
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x[],int y,node *&head){
+  head=NULL;
+  node *l=head;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+    node *head,*h1,*h2,*h3;
+    int arr[]={2,3,5,9,11,12,18};
+    input(arr,sizeof(arr)/4,head);
+    output(head);
+    h1=head;
+    h2=head->next;
+
+    while(h2 and h2->next){
+      h3=h2->next;
+      node*m=h3->next;
+      h1->next=h3;
+      h3->next=h2;
+      h2->next=m;
+      h1=h2;
+      if(m!=NULL){
+       h2=h2->next;
+       h3=h2->next;
+     }
+    }
+    output(head);
+}
+
