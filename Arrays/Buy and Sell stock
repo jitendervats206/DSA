@@ -1,0 +1,20 @@
+
+*** To find best time to buy and sell stock from given array***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    int arr[]={7,15,5,3,6,4};
+    int b=arr[0],s=0;
+
+    for(int i=1;i<sizeof(arr)/4;i++){
+     s=max(s,arr[i]-b);
+     b=min(b,arr[i]);
+    }
+
+    cout<<s;
+}
