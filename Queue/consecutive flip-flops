@@ -1,0 +1,56 @@
+
+*** minimum consecutive flip flops ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<queue>
+#include<vector>
+using namespace std;
+int main()
+{            
+    int arr[]={1,0,1,1,0};
+    int flip=0,k=3;
+    queue<int> q;
+    int end=k-1;
+
+  for(int i=0;end<sizeof(arr)/4;i++){
+    if(!q.empty() and q.size()%2==0 and arr[i]==0){
+      arr[i]=!arr[i];
+      q.push(end);
+      flip++;
+    }
+    else if(!q.empty() and q.size()%2!=0 and arr[i]==0)
+      arr[i]=!arr[i];
+    else if(!q.empty() and (q.size()%2)!=0 and arr[i]==1){
+      flip++;
+      q.push(end);
+    }
+    else if(q.empty() and arr[i]==0){
+     arr[i]=!arr[i];
+     flip++;
+     q.push(end);
+    }
+    if(i==q.front())
+     q.pop();
+    end++;
+  }
+  
+  for(int i=0;i<sizeof(arr)/4;i++)
+   cout<<arr[i]<<" ";
+  cout<<endl;
+
+  k=(sizeof(arr)/4)-k+1;
+  for(int i=k;i<sizeof(arr)/4;i++){
+    if(!q.empty() and q.size()%2!=0 and arr[i]==0)
+      arr[i]=!arr[i];
+    else if(!q.empty() and (q.size()%2)!=0 and arr[i]==1)
+      arr[i]=!arr[i];
+    if(i==q.front())
+      q.pop();
+  }
+
+  for(int i=0;i<sizeof(arr)/4;i++)
+   cout<<arr[i]<<" ";
+}
