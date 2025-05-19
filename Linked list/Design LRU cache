@@ -1,0 +1,79 @@
+
+*** design an LRU cache working model ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<unordered_map>
+using namespace std;
+class node{
+  public:
+  int key,data;
+  node *next;
+  node *pre;
+  node(int k,int d){
+    key=k;
+    data=d;
+    next=NULL;
+    pre=NULL;
+  }
+};
+
+void add(node*&h,node*&head){
+  h->next=head->next;
+  head->next=h;
+  h->pre=head;
+  h->next->pre=h;  
+}
+
+void del(node*&h){
+  h->pre->next=h->next;
+  h->next->pre=h->pre;
+  delete h;
+}
+
+void put(int k,int d,node*&head,node*&tail,unordered_map<int,node*>&m){
+  if(m.find(k)!=m.end()){
+    del(m[k]);
+    m.erase(k);
+  }
+  if(m.size()==2){
+    m.erase(tail->pre->key);
+    del(m[tail->pre->key]);
+  }
+  node*newnode=new node(k,d);
+  add(newnode,head);
+  m[k]=newnode;
+ 
+}
+
+void get(int k,node*&head,unordered_map<int,node*>&m){
+  if(m.find(k)==m.end())
+   cout<<-1;
+  else{
+   cout<<m[k]->key<<" "<<m[k]->data;
+   node*newnode=new node(m[k]->key,m[k]->data);
+   del(m[k]);
+   m.erase(k);
+   add(newnode,head);
+   m[k]=newnode;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+  node *head=new node(-1,-1);
+  node *tail=new node(-1,-1);
+  head->next=tail;
+  tail->pre=head;
+  unordered_map<int,node*>m;
+
+  put(1,1,head,tail,m);
+  put(2,2,head,tail,m);
+  get(2,head,m);
+  put(2,3,head,tail,m);
+  get(2,head,m);
+
+}
