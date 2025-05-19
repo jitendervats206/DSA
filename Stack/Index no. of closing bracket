@@ -1,0 +1,30 @@
+
+*** Index no. closing bracket for opening bracket ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<stack>
+using namespace std;
+int main()
+{
+  string str="[ABC[23]][89]";
+  stack<int>s;
+  int index=0;
+  int bkt=4;
+
+  for(int i=index;i<str.size();i++){
+    if(str[i]=='[' and i>=bkt)
+     s.push(str[i]);
+    else if(str[i]==']' and i>bkt){
+     s.pop();
+     if(s.empty()){
+      cout<<index;
+      break;
+     }
+    }
+    index++;
+  }
+
+}
