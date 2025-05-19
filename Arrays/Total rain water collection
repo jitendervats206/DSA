@@ -1,0 +1,35 @@
+
+*** To find the maximum water rainwater collected from given array***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+#include<iostream>
+using namespace std;
+int main()
+{           
+    int arr[]={4,2,0,5,2,6,2,3};
+    int x=arr[0],y=0,w=0,m; 
+    
+    for(int i=1;i<sizeof(arr)/4;i++)
+     if(arr[i]>arr[y])
+      y=i;
+     
+    for(int i=1;i<y;i++){
+      m=min(x,arr[y]);
+      if(m>arr[i])
+       w=w+(m-arr[i]);
+      x=max(x,arr[i]);
+    }
+    x=y;
+    y=arr[(sizeof(arr)/4)-1];
+    for(int i=(sizeof(arr)/4)-2;i>x;i--){
+      m=min(arr[x],y);
+      if(m>arr[i])
+       w=w+(m-arr[i]);
+      y=max(y,arr[i]);
+    }
+
+    cout<<w;
+
+}
+
