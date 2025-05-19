@@ -1,0 +1,34 @@
+
+*** generate binary number upto k ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<queue>
+using namespace std;
+int main()
+{
+  queue<string>q;
+  q.push("1");
+  int k=3,x=1;
+
+  while(x<k){
+    cout<<q.front()<<" ";
+    q.push(q.front()+"0");
+    x++;
+    if(k==x)
+     break;
+    q.push(q.front()+"1");
+    x++;
+    q.pop();  
+  }
+  if(x%2==0)
+   q.pop();
+
+  while(!q.empty()){
+    cout<<q.front()<<" ";
+    q.pop();
+  }
+   
+}
