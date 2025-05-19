@@ -1,0 +1,41 @@
+
+*** Merge the intervals***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<vector>
+#include<stack>
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    vector<vector<int>> arr={{1,3},{2,6},{8,10},{8,9},{9,11},{15,18},{2,4},{16,17}};
+    stack<int>s;
+    sort(arr.begin(),arr.end());
+
+    s.push(arr[0][0]);
+    s.push(arr[0][1]);
+
+    for(int i=1;i<arr.size();i++){
+      if(s.top()>arr[i][0]){
+       if(arr[i][1]>s.top()){
+       s.pop();
+       s.push(arr[i][1]);
+       }
+      }
+      else{
+       s.push(arr[i][0]);
+       s.push(arr[i][1]);
+      }
+    }
+
+    while(!s.empty()){
+     cout<<"["<<s.top()<<",";
+     s.pop();
+     cout<<s.top()<<"],";
+     s.pop();
+    }
+
+}
