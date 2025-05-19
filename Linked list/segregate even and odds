@@ -1,0 +1,76 @@
+
+
+*** seprate even and odds in LL***
+*** Time complexity : O(N)
+*** Space complexity : O(1)
+
+
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x[],int y,node *&head){
+  head=NULL;
+  node *l=head;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+    node *head,*h;
+    int arr[]={17,15,8,9,2,4,6};
+    input(arr,sizeof(arr)/4,head);
+    output(head);     
+    h=head;
+    node *eh=new node;
+    eh->data=-1;
+    node *oh=new node;
+    oh->data=-1;
+    node *e=eh,*o=oh;
+
+    while(h){
+      if(h->data%2!=0){
+       o->next=h;
+       h=h->next;
+       o=o->next;
+       o->next=NULL;
+      }
+      else{
+       e->next=h;
+       h=h->next;
+       e=e->next;
+       e->next=NULL;
+      }
+    }
+    
+    e->next=oh->next;
+    head=eh->next;
+    delete eh;
+    delete oh;
+    output(head);
+
+}
+
