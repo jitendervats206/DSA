@@ -1,0 +1,24 @@
+
+*** To find the majority element from given array***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    int arr[]={0,0,0,0,2,1,1};
+    int freq=0;
+    int ele;
+
+    for(int i=0;i<sizeof(arr)/4;i++){
+      if(freq==0)
+       ele=arr[i];
+      if(ele==arr[i])
+       freq++;
+      else 
+       freq--;
+    }
+    cout<<ele;
+}
