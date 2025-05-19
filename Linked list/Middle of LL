@@ -1,0 +1,54 @@
+
+*** To find Middle of LL using two pointer ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x[],int y,node *&head){
+  node *l=NULL;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+    node *head;
+    head=NULL;
+    int arr[]={1,2,5,7,9,0,8};
+
+    input(arr,sizeof(arr)/4,head);
+    output(head);
+    
+    node *s=head,*f=head;
+    while(f!=NULL and f->next!=NULL){
+      s=s->next;
+      f=f->next->next;
+    }
+    cout<<s->data<<endl<<s;
+}
