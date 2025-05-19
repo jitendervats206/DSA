@@ -1,0 +1,29 @@
+
+*** Redundant bracket expression ***
+*** Time complexity : O(NLogN)
+*** Space complexity : O(1)
+
+
+#include<iostream>
+#include<stack>
+using namespace std;
+int main()
+{
+  string str="(a-(a+b))";
+  stack<char>s;
+
+  for(int i=0;i<str.size();i++){
+   if(str[i]=='(' or str[i]=='+' or str[i]=='-' or str[i]=='/' or str[i]=='*')
+    s.push(str[i]);
+
+   else if(str[i]==')'){
+    if(s.top()=='(')
+     cout<<"yes";
+     while(!s.empty() and s.top()!='(')
+      s.pop();
+     s.pop();
+   }
+  }
+  
+}
+
