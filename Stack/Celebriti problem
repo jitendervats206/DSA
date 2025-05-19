@@ -1,0 +1,56 @@
+
+*** find celebriti in matrix ***
+*** Time complexity : O(N)
+*** Space complexity : O(1)
+
+
+#include<iostream>
+#include<vector>
+#include<stack>
+using namespace std;
+int main()
+{
+  int arr[5][5]={0,1,0,1,1,  0,0,0,1,1 ,0,1,0,1,0, 0,0,0,0,0, 1,0,1,1,0};
+  stack<int>s;
+  int x,y;
+  x=(sizeof(arr[0])/4);
+  for(int i=0;i<x;i++){
+   for(int j=0;j<x;j++)
+    cout<<arr[i][j]<<" ";
+    cout<<endl;
+  }
+  for(int i=0;i<x;i++)
+   s.push(i);
+
+   x=s.top();
+   s.pop();
+
+  while(!s.empty()){
+    y=s.top();
+    s.pop();
+    if(arr[x][y]==1 and arr[y][x]==0)
+     x=y;
+    else if(arr[x][y]==0 and arr[y][x]==0  and !s.empty()){
+      x=s.top();
+      s.pop();
+    }
+    else if(arr[x][y]==1 and arr[y][x]==1  and !s.empty()){
+        x=s.top();
+        s.pop();
+    }   
+  }
+
+  bool flag=true;
+  for(int i=0;i<sizeof(arr[0])/4;i++){
+    if(i!=x and arr[i][x]!=1)
+     flag=false;
+    if(arr[x][i]!=0 and i!=x)
+     flag=false;
+  }
+
+  if(flag==false)
+   cout<<-1;
+  else
+   cout<<x; 
+
+}
