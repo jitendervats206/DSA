@@ -1,0 +1,93 @@
+
+
+*** clone LL with next and random pointer ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<unordered_map>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+  node *rdm;
+};
+
+void input(int x[],int y,node *&head){
+  head=NULL;
+  node *l=head;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->rdm=NULL;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+}
+
+int main()
+{
+    node *head,*h;
+    unordered_map<node*,node*>m;
+    int arr[]={1,2,3,4,5};
+    input(arr,sizeof(arr)/4,head);
+    output(head);     
+    cout<<" original LL"<<endl;
+
+    h=head;
+    h->rdm=h->next->next;
+    h=h->next;
+    h->rdm=head;
+    h->next->next->next->rdm=h;
+    h=h->next;
+    h->rdm=h->next->next;
+    h->next->rdm=h;
+
+    h=head;
+    while(h!=NULL){
+     cout<<h->rdm->data<<"->";
+     h=h->next;
+    }
+
+    cout<<"  original rdm"<<endl;
+    h=head;
+    node*head1,*h1;
+    input(arr,sizeof(arr)/4,head1);
+    output(head1);
+    cout<<" clone LL"<<endl;
+    h1=head1;
+    while(h){
+      m[h]=h1;
+      h=h->next;
+      h1=h1->next;
+    }
+    h=head;
+    h1=head1;
+    while(h1){
+      h1->rdm=m[h->rdm];
+      h1=h1->next;
+      h=h->next;
+    }
+
+    h1=head1;
+    while(h1!=NULL){
+     cout<<h1->rdm->data<<"->";
+     h1=h1->next;
+    }
+    cout<<"  cloned rdm";
+    
+}
