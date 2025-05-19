@@ -1,0 +1,78 @@
+
+*** arrange an Multilevel lInk list***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next,*pre,*btm;
+};
+
+void input(vector<int>x,int y,node *&head){
+  node *l=NULL;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   temp->btm=NULL;
+   if(head==NULL){
+    head=temp;
+    head->pre=l;
+   }
+   else{
+    l->next=temp;
+    temp->pre=l;
+   }
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+}
+
+int main()                                          
+{
+  node *head,*curr,*h1,*h2;   
+  head=h1=h2=NULL;                  
+  vector<int>v,v1,v2;
+  v={1,2,3,4,5};
+  v1={6,7,8};
+  v2={9,10};
+  input(v,v.size(),head);
+  input(v1,v1.size(),h1);
+  input(v2,v2.size(),h2);
+
+  head->next->next->btm=h1;
+  h1->next->btm=h2;
+  curr=head;
+
+  while(curr){
+    if(curr->btm){
+      node*h=curr->next;
+      node*b=curr->btm;
+      while(b->next)
+       b=b->next;
+      b->next=h;
+      h->pre=b;
+      b=curr->btm;
+      curr->next=b;
+      b->pre=curr;
+      curr->btm=NULL;
+    }
+    curr=curr->next;
+  }
+
+  output(head);
+
+}
