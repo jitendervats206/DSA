@@ -1,0 +1,52 @@
+
+*** To remove duplicate in sorted LL***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x,node *&head){
+  node *temp=new node;
+  temp->data=x;
+  temp->next=head;
+  head=temp;
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<" ";
+    h=h->next;
+  }
+}
+
+int main()
+{
+    node *head,*t,*h;
+    head=NULL;
+    int arr[]={1,1,2,2,3,8};
+    for(int i=0;i<sizeof(arr)/4;i++)
+     input(arr[i],head);
+    output(head);
+
+    h=head;    
+    while(h->next!=NULL){
+      if(h->data==h->next->data){
+       t=h->next->next;
+       delete h->next;
+       h->next=t;
+      }
+      else
+       h=h->next;
+    }
+    cout<<endl;
+    output(head);
+     
+}
