@@ -1,0 +1,84 @@
+
+*** To arrange LL accordind to pair of first with last respectivly ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<stack>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x[],int y,node *&head){
+  node *l=NULL;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+void reverse(node *&s){
+  node *p=NULL;
+  node *c=s;
+  node *n=s;
+  while(n!=NULL){
+    n=n->next;
+    c->next=p;
+    p=c;
+    s=c;
+    c=n;
+  }
+}
+
+int main()
+{
+   node *head;
+   head=NULL;
+   int arr[]={9,42,4,8,15,16,23};
+
+   input(arr,sizeof(arr)/4,head);
+   output(head);
+   node*slow=head;
+   node*fast=head;
+
+   while(fast and fast->next){
+    slow=slow->next;
+    fast=fast->next->next;
+   }
+   fast=slow->next;
+   slow->next=NULL;
+   reverse(fast);
+
+   slow=head;
+   while(fast){
+    node*h=slow->next;
+    node*s=fast;
+    fast=fast->next;
+    s->next=NULL;
+    slow->next=s;
+    s->next=h;
+    slow=slow->next->next;
+   }
+
+   output(head);
+
+}
