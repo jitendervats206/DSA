@@ -1,0 +1,68 @@
+
+*** string expression of valid ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<stack>
+using namespace std;
+void check(stack<char>&s,string &str){
+  bool flag=false;
+  char x;
+
+    for(int i=0;i<str.size();i++){
+      if(str[i]=='(' and !s.empty()){
+        x=s.top();
+        s.pop();
+        flag=true;
+      }
+      else if(str[i]==')')
+        flag=false;
+      else if(flag==true){
+        if((str[i]!='-' and x=='-' and str[i]!='+' and s.top()!='+' and s.top()!='-')){
+         s.push('-');     
+         s.push(str[i]);       
+      }
+      else if((str[i]!='-' and x=='+' and str[i]!='+' and s.top()!='+' and s.top()!='-')){
+        s.push('+');     
+        s.push(str[i]);       
+      }
+      else if((str[i]=='+' and x=='+') or (str[i]=='-' and x=='-'))
+        s.push('+');            
+      else if((str[i]=='-' and x=='+') or (str[i]=='+' and x=='-'))
+        s.push('-');            
+      else
+        s.push(str[i]);
+      }
+
+      else if(str[i]!='(' and str[i]!=')')
+        s.push(str[i]);
+    }
+}
+
+int main()
+{
+    string str1="(a+b)-(-c+d)+(k)";
+    string str2="a+b-(-c)-(d-k)";
+    stack<char>s1,s2;
+    char x;
+    bool flag=false;
+    check(s1,str1);
+    check(s2,str2);
+    
+    while(!s1.empty()){
+      if(s1.top()!=s2.top()){
+       cout<<"no";
+       flag=true;
+       break;
+      }  
+     s1.pop();
+     s2.pop();
+    }
+
+    if(flag==false)
+     cout<<"yes";
+
+}
+
