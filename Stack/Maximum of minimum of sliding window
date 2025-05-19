@@ -1,0 +1,42 @@
+
+*** To find sum from 2 index values from given array***
+*** Time complexity : O(NLogN)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<vector>
+#include<stack>
+using namespace std;
+int main()
+{           
+   int arr[]={10,20,15,50,10,70,30};
+   vector<int>v(sizeof(arr)/4,-1);
+   vector<int>ans(sizeof(arr)/4,-1);
+   stack<int>s;
+    s.push(arr[v.size()-1]);
+    for(int i=v.size()-2;i>=0;i--){
+     while(!s.empty() and s.top()<arr[i])
+      s.pop();
+     if(!s.empty())
+      v[i]=s.top();
+     s.push(arr[i]);
+    }
+    
+    while(!s.empty())
+     s.pop();
+
+    s.push(v.size()-1);
+    for(int i=v.size()-2;i>=0;i--){
+     while(!s.empty() and arr[s.top()]>arr[i])
+       s.pop();
+     if(!s.empty())
+      ans[i]=v[s.top()];
+     s.push(i);
+    }
+
+    for(int i=0;i<ans.size();i++)
+     cout<<ans[i]<<" ";   
+
+}
+
