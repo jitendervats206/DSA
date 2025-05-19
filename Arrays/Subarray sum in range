@@ -1,0 +1,36 @@
+
+*** To find Subarray sum in range ***
+*** Time complexity : O(NLogN)
+*** Space complexity : 0(1)
+
+#include<iostream>
+#include<vector>
+#include<climits>
+using namespace std;
+
+int check(vector<int>v,int k){
+  int start=0,end=0,sum=0,total=0;
+
+  while(end<v.size()){
+    sum=sum+v[end];
+    while(sum>k and start<=end){
+      sum=sum-v[start];   
+      start++;
+    }
+    total=total+(end-start)+1;
+    end++;
+  }
+  return total;
+
+}
+
+int main()
+{
+  vector<int>v={2,7,12};
+  int l=2,r=7;
+
+  int x=check(v,r);
+  int y=check(v,l-1);
+  cout<<x-y;
+
+}
