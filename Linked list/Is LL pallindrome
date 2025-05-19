@@ -1,0 +1,82 @@
+
+*** to check for pallindromic LL ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x[],int y,node *&head){
+  node *l=NULL;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+void reverse(node *&s){
+  node *p=NULL;
+  node *c=s;
+  node *n=s;
+  while(n!=NULL){
+    n=n->next;
+    c->next=p;
+    p=c;
+    s=c;
+    c=n;
+  }
+}
+
+int main()
+{
+   node *head;
+   head=NULL;
+   int arr[]={1,2,3,2,1};
+
+   input(arr,sizeof(arr)/4,head);
+   output(head);
+   node *f=head;
+   node *s=head;
+
+   while(f!=NULL and f->next!=NULL){
+     s=s->next;
+     f=f->next->next;
+   }
+  
+   reverse(s);
+   node *s1=s,*h=head;
+   s1=s;
+   h=head;
+
+   while(h){
+    if(s1->data!=h->data){
+     cout<<"not pallindrome";
+     break;
+    }
+    else if(s1->next==NULL and s1->data==h->data)
+     cout<<"pallindrome";
+    s1=s1->next;
+    h=h->next;
+   }
+}
