@@ -1,0 +1,23 @@
+
+
+*** To find the maximum product of continues subaray from given array***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+#include<iostream>
+#include<vector>
+using namespace std;
+int main()
+{
+    vector<int>arr={2,3,-4,5,3,0,5,6};
+    int product=1,mx=arr[0];
+
+    for(int i=0;i<arr.size();i++){
+      product=product*arr[i];
+      mx=max(product,mx);
+      if(arr[i]<=0)
+       product=1;
+    }
+   cout<<mx;
+}
+
