@@ -1,0 +1,82 @@
+
+*** impliment queue using array ***
+*** Time complexity : O(N)
+*** Space complexity : O(1)
+
+
+#include<iostream>
+using namespace std;
+class queue{
+  public:
+   int *arr;
+   int front;
+   int size;
+   int push;
+};
+
+void input(int s,queue &q){
+    q.size=s;
+    q.arr=new int[s];
+    q.front=0;
+    q.push=-1;
+}
+
+void push(int x,queue &q){
+   if(q.push+1==q.size and q.front==0)
+    cout<<"is full"<<endl;
+   else if(q.push+1==q.size and q.front!=0){
+    q.push=0;
+    q.arr[q.push]=x;
+    cout<<"pushed1"<<endl;
+   }
+   else{
+    q.push++;
+    q.arr[q.push]=x;
+    cout<<"pushed"<<endl;
+   }
+}
+
+void pop(queue &q){
+    if(q.push==-1)
+      cout<<"is empty"<<endl;
+    else if(q.front+1==q.size and q.push!=q.size-1){
+      cout<<"popped1"<<endl;
+      q.front=0;
+    }
+    else{
+      if(q.front==q.push){
+        q.front=0;
+        q.push=-1;
+        cout<<"popped"<<endl;
+      }
+      else{
+       q.front++;
+       cout<<"popped"<<endl;
+      }
+    }
+} 
+
+void front(queue &q){
+    if(q.push!=-1)
+     cout<<q.arr[q.front]<<endl;
+    else
+     cout<<"empty "<<endl;
+}
+
+
+int main()
+{
+    queue q;
+    input(5,q);
+    push(3,q);
+    push(5,q);
+    push(6,q);
+    push(7,q);
+    push(8,q);
+    pop(q);
+    push(9,q);
+    pop(q);
+    pop(q); pop(q); pop(q);
+    front(q);
+  
+}
