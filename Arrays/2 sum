@@ -1,0 +1,55 @@
+
+*** To find sum from 2 index values from given array***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<unordered_map>
+using namespace std;
+int main()
+{
+    int arr[]={-1,-2,-3,-4,-5};
+    unordered_map<int,int>m;
+    int s=-8;
+
+    for(int i=0;i<sizeof(arr)/4;i++){
+        int e=s-arr[i];
+        if(m.find(e)!=m.end()){
+         cout<<i<<" "<<m[e];
+         break;
+        } 
+        m[arr[i]]=i;
+    }
+}
+
+
+
+*** ALTERNATE ***
+
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    int arr[]={1,4,6,8,10,45};
+    int start,end,s;
+    int target=24;
+
+     start=i++;
+     end=(sizeof(arr)/4)-1;
+
+     while(start<end){
+      if(arr[start]+arr[end]>s)
+       end--;
+      else if(arr[start]+arr[end]<s)
+       start++;
+      else{
+       cout<<arr[start]<<","<<arr[end];
+       break;
+       }
+     }
+
+}
