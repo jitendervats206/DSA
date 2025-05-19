@@ -1,0 +1,53 @@
+
+*** To Put last element in front of LL ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<unordered_map>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x,node *&head){
+  node *temp=new node;
+  temp->data=x;
+  temp->next=head;
+  head=temp;
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<" ";
+    h=h->next;
+  }
+}
+
+int main()
+{
+    node *head,*t,*c,*h;
+    head=NULL;
+    int x=0,k;
+
+    int arr[]={5,2,7,3,4};
+    for(int i=0;i<sizeof(arr)/4;i++)
+     input(arr[i],head);
+    output(head);
+
+    t=head;
+    h=head;
+    while(t->next->next!=NULL)
+      t=t->next;
+    
+    cout<<endl;
+    h=t->next;
+    t->next=NULL;
+    h->next=head;
+    head=h;
+    output(head);   
+}
