@@ -1,0 +1,71 @@
+
+*** To find  apir sum in LL ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+  node *pre;
+};
+
+void input(int x[],int y,node *&head){
+  node *l=NULL;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL){
+    head=temp;
+    head->pre=l;
+   }
+   else{
+    l->next=temp;
+    temp->pre=l;
+   }
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+   node *head;
+   head=NULL;
+   int arr[]={4,10,12,18,21,23,24,27,28,32,35,44};
+   input(arr,sizeof(arr)/4,head);
+   output(head);
+   node *head1=head;
+   while(head1->next!=NULL)
+    head1=head1->next;
+
+   node *l=head;
+   node *r=head1;
+   int k=14;
+   cout<<"k: "<<k<<endl;
+
+   while(l<r){
+    if(l->data+r->data==k){
+      cout<<l->data<<","<<r->data<<endl;
+      l=l->next;
+      r=r->pre;
+    }
+    else if(l->data+r->data<k)
+     l=l->next;
+    else
+     r=r->pre;  
+   }
+ 
+}
