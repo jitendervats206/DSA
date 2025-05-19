@@ -1,0 +1,53 @@
+
+*** Stack using queue ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<queue>
+using namespace std;
+void push(int x,queue<int> &s){
+    s.push(x);
+    cout<<"pushed"<<endl;   
+}
+
+void pop(queue<int> &s){
+    for(int i=0;i<s.size()-1;i++){
+      s.push(s.front());
+      s.pop();
+    }   
+    if(s.size()!=0){
+     s.pop();
+     cout<<"popped"<<endl;
+    }
+    else
+     cout<<"stack underflow"<<endl;
+}
+
+void top(queue<int>&s){
+    for(int i=0;i<s.size()-1;i++){
+      s.push(s.front());
+      s.pop();
+    }   
+    if(s.size()!=0){
+     cout<<s.front()<<endl;
+     s.push(s.front());
+     s.pop();
+    }
+    else
+     cout<<"stack underflow"<<endl;
+}
+
+int main()
+{
+    queue<int>s;
+    push(1,s);
+    push(2,s);
+    push(3,s);
+    push(4,s);
+    push(5,s);
+    pop(s);
+    top(s);
+
+}
