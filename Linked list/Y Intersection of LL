@@ -1,0 +1,93 @@
+
+*** To find Y intersection point in LL***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x[],int y,node *&head){
+  node *l=NULL;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+    node *head,*head1;
+    head=NULL;
+    head1=NULL;
+    int x=0,y=0;
+
+    int arr[]={1,2,5,7,9,15,19};
+    int brr[]={0,4,6,8,10};
+
+    input(arr,sizeof(arr)/4,head);
+    output(head);
+    input(brr,sizeof(brr)/4,head1);
+    output(head1);
+    node *h=head,*h1=head1;
+
+    for(int i=0;i<4;i++){
+      h=h->next;
+      h1=h1->next;
+    }
+
+    h1->next=h;
+    output(head1);
+    h=head;
+    h1=head1;
+    while(h){
+      x++;
+      h=h->next;
+    }
+    while(h1){
+      y++;
+      h1=h1->next;
+    }
+    
+    h=head;
+    h1=head1;
+    for(int i=0;i<abs(x-y);i++){
+      if(x<y)
+       h1=h1->next;
+      else if(x>y)
+       h=h->next;
+    }
+
+    while(h && h1){
+      if(h==h1 and h!=NULL){
+        cout<<"inetsection point is : "<<h->data;
+        break;
+      }
+      else if(h==NULL and h1==NULL){
+       cout<<-1;
+       break;
+      }
+      h=h->next;
+      h1=h1->next;
+    }
+}
