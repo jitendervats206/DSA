@@ -1,0 +1,19 @@
+
+
+*** To find Dupicate elements from given array ***
+*** Time complexity : O(N*N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+  int arr[]={4,3,2,7,2,3,1};
+  cout<<"Duplicate element are ";  
+   for(int i=0;i<(sizeof(arr)/4);i++) 
+    for(int j=i+1;j<(sizeof(arr)/4);j++){
+      if(arr[i]==arr[j])
+       cout<<arr[j]<<" ";
+    }    
+}
