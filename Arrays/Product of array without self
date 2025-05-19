@@ -1,0 +1,65 @@
+
+
+*** To find the maximum product of array without self ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    int arr[]={3,6,1,5,4};
+    int l[sizeof(arr)/4];
+    int r[sizeof(arr)/4];
+    
+    for(int i=0;i<sizeof(arr)/4;i++){
+      if(i==0)
+       l[i]=1;
+      else
+       l[i]=arr[i-1]*l[i-1];
+    }
+
+    for(int i=(sizeof(arr)/4)-1;i>=0;i--){
+      if(i==(sizeof(arr)/4)-1)
+       r[i]=1;
+      else
+       r[i]=arr[i+1]*r[i+1];
+    }
+
+    cout<<"array except self :";
+    for(int i=0;i<sizeof(arr)/4;i++)
+     cout<<l[i]*r[i]<<" ";
+
+}
+
+
+
+**** ALTERNATE ****
+
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+int main()
+{
+  int arr[]={1,2,3,4};
+  vector<int>v(sizeof(arr)/4,1);
+  int r=1;
+  
+  for(int i=1;i<v.size();i++)
+    v[i]=v[i-1]*arr[i-1];
+  
+  for(int i=v.size()-2;i>=0;i--){
+    r=r*arr[i+1];
+    v[i]=v[i]*r;
+  }
+   
+  for(int i=0;i<v.size();i++)
+   cout<<v[i]<<" ";
+}
+
+
