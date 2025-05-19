@@ -1,0 +1,21 @@
+
+*** Find minimum value in array***
+*** Time comlexity : O(N)
+*** Space compexity : O(1)
+
+#include<iostream>
+#include<climits>
+using namespace std;
+int main()
+{
+  int arr[]={-2,1,-4,5,3};
+  int y=arr[0];
+
+   for(int i=0;i<sizeof(arr)/4;i++){              
+     if(arr[i]<y)
+      y=arr[i];
+    }
+
+    cout<<"MINIMUM VALUE : "<<y<<endl;
+    
+}
