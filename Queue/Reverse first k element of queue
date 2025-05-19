@@ -1,0 +1,42 @@
+
+*** Reverse first k element of queue ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+#include<iostream>
+#include<queue>
+using namespace std;
+queue<int> reverse(queue<int>&q,int k,int s){
+  if(s==k)
+   return q;
+  
+  int a=q.front();
+  q.pop();
+  s++;
+  reverse(q,k,s);
+  q.push(a);
+  return q;
+}
+
+int main()
+{
+  queue<int>q;
+  int k=2;
+  q.push(1);
+  q.push(2);
+  q.push(3);
+  q.push(4);
+  q.push(5);
+
+  reverse (q,k,0);
+  for(int i=0;i<q.size()-k;i++){
+    q.push(q.front());
+    q.pop();
+  }
+
+  while(!q.empty()){
+    cout<<q.front()<<" ";
+    q.pop();
+  }
+   
+}
