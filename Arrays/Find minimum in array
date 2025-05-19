@@ -1,4 +1,24 @@
 
+*** To find the maximum value from given array***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<climits>
+using namespace std;
+int main()
+{
+  int arr[]={-2,1,-4,5,3};
+  int x=arr[0];
+   for(int i=0;i<sizeof(arr)/4;i++)              
+     if(arr[i]>x)
+      x=arr[i];
+
+    cout<<"MAXIMUM VALUE : "<<x<<endl;
+}
+
+
 
 
 
