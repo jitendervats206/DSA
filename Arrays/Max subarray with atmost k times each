@@ -1,0 +1,33 @@
+
+*** To find Max subarray with atmost k times each element ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+#include<climits>
+using namespace std;
+int main()
+{
+    vector<int>v={1,2,3,1,2,3,3,4,1,2};
+    unordered_map<int,int>m;
+    int mx=INT_MIN,x=0,start=0,end=0,l=0,k=2,u;
+  
+    while(end<v.size()){
+     if(m[v[end]]<k){
+      m[v[end]]++;
+      l++;
+      end++;
+     }
+     else{
+      m[v[start]]--;
+      start++;
+      l--;
+     }
+     x=max(x,l);
+    }
+
+    cout<<x; 
+}
