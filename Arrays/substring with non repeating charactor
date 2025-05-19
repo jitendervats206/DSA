@@ -1,0 +1,31 @@
+
+*** To find substring with non repeating charactor ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    vector<char>v={'a','b','c','d','e','c','b','e','a','d','f'};
+    unordered_map<int,int>m;
+    int mx=0,x=0,start=0,end=0;
+
+     while(end<v.size()){
+      if(m[v[end]]>0){
+       m[v[start]]=0;
+       start++;
+       x--;
+      }
+      else{
+       m[v[end]]=1;
+       x++;
+       end++;
+       mx=max(x,mx);  
+      }    
+    }
+    cout<<mx;   
+}
