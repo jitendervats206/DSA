@@ -1,0 +1,71 @@
+
+*** to sort an k sorted LL ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+  node *pre;
+};
+
+void input(int x[],int y,node *&head){
+  node *l=NULL;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL){
+    head=temp;
+    head->pre=l;
+   }
+   else{
+    l->next=temp;
+    temp->pre=l;
+   }
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+   node *head;
+   int k=2;
+   head=NULL;
+   int arr[]={3,2,1,5,6,4};
+   input(arr,sizeof(arr)/4,head);
+   output(head);
+   
+   priority_queue<int,vector<int>,greater<int>>mn;
+   node *temp=head,*temp1=head;
+   for(int i=0;i<k+1;i++){
+    mn.push(temp1->data);
+    temp1=temp1->next;
+   } 
+
+   while(temp){
+    temp->data=mn.top();
+    mn.pop();
+    if(temp1!=NULL){
+     mn.push(temp1->data); 
+     temp1=temp1->next;
+    }
+    temp=temp->next;
+   }
+   output(head);
+
+}
