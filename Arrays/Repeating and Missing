@@ -1,0 +1,37 @@
+
+*** To find the maximum value from given array***
+*** Time complexity : O(N*N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    unordered_map<int,int>m;
+    vector<int>ans;
+    vector<vector<int>>grid={{9,1,7},{8,9,2},{3,4,6}};
+        
+    for(int i=0;i<grid.size();i++)
+     for(int j=0;j<grid[i].size();j++)
+      m[grid[i][j]]++;
+        
+    for(int i=1;i<=m.size();i++)
+     if(m[i]>1)
+      ans.push_back(i);
+
+    for(int i=1;i<=grid.size()*grid.size();i++)
+     if(m[i]==0)
+      ans.push_back(i);
+    
+    if(ans.size()==0){
+      ans.push_back(0);
+      ans.push_back(0);
+    }
+
+    for(int i=0;i<ans.size();i++) 
+     cout<<ans[i]<<" ";
+
+}
