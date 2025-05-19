@@ -1,0 +1,90 @@
+
+
+*** reverse an doubly LL ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+  node *pre;
+};
+
+void input(int x[],int y,node *&head){
+  node *l=NULL;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL){
+    head=temp;
+    head->pre=l;
+   }
+   else{
+    l->next=temp;
+    temp->pre=l;
+   }
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void noutput(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+void poutput(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->pre;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+   node *head;
+   head=NULL;
+   int arr[]={1,2,3,4,5,6};
+
+   input(arr,sizeof(arr)/4,head);
+   noutput(head);
+   node *head1=head;
+   for(int i=1;i<sizeof(arr)/4;i++)
+    head1=head1->next;
+
+   node*h1=head1;
+   poutput(h1);
+   
+   node*p,*c,*t;
+   p=head1->pre;
+   c=p; 
+   t=head1;
+
+    h1=head1;
+    while(h1){
+      p=p->pre;
+      t->next=c;
+      c->pre=t;
+      c=p;
+      t=t->next;
+      if(p==NULL){
+       t->next=NULL;
+       break;
+      }
+    }
+    h1=head1;
+    noutput(h1);
+    
+}
+
