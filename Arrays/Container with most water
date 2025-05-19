@@ -1,0 +1,27 @@
+
+*** To find maximum water store in container ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    int arr[]={1,8,6,2,5,4,8,3,7};
+    int w=(sizeof(arr)/4)-1;
+    int s=0,e=(sizeof(arr)/4)-1;
+    int mx=0;
+
+    while(s<e){
+     mx=max(mx,min(arr[s],arr[e])*w);
+     if(arr[s]<arr[e])
+      s++;
+     else
+      e--; 
+     w--;
+    }
+    cout<<mx;
+}
+
+
