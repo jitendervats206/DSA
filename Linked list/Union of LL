@@ -1,0 +1,94 @@
+
+*** To find union of LL***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x[],int y,node *&head){
+  head=NULL;
+  node *l=head;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data;
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+  node *head=NULL,*head1,*head2,*h;
+  int arr[]={0,1,5};
+  int arr1[]={1,2};
+     
+  input(arr,sizeof(arr)/4,head1);
+  output(head1); 
+  input(arr1,sizeof(arr1)/4,head2);
+  output(head2);
+
+  head=new node();
+  head->data=-1;
+  node*dummy=head;
+
+  while(head1 and head2){
+    if(head1->data<head2->data){
+        dummy->next=head1;
+        head1=head1->next;
+        dummy=dummy->next;
+        dummy->next=NULL;
+    }
+    else if(head1->data>head2->data){
+        dummy->next=head2;
+        head2=head2->next;
+        dummy=dummy->next;
+        dummy->next=NULL;
+    }
+    else{
+        dummy->next=head1;
+        head1=head1->next;
+        dummy=dummy->next;
+        dummy->next=head2;
+        head2=head2->next;
+        dummy=dummy->next;
+        dummy->next=NULL;
+    }
+   }
+
+    while(head1){
+     dummy->next=head1;
+     head1=head1->next;
+     dummy=dummy->next;
+     dummy->next=NULL;
+    }
+    while(head2){
+     dummy->next=head1;
+     head1=head1->next;
+     dummy=dummy->next;
+     dummy->next=NULL;
+    }
+    
+  output(head->next);
+}
+
+
