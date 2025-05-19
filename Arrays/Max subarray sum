@@ -1,0 +1,25 @@
+
+*** To find Max subarray sum ***
+*** Time complexity : O(N*N)
+*** Space complexity : 0(1)
+
+*** using brute force method ***
+                                                                                                 
+#include<iostream>
+using namespace std;
+int main()
+{
+  int arr[]={-2,1,-3,4,-1,2,1,-5,4};
+  int s=0,sum=0,x=0;
+
+   for(int i=0;i<(sizeof(arr)/4);i++){   
+    sum=0;         
+     for(int j=i;j<(sizeof(arr)/4);j++){
+      s=sum+arr[j];
+      sum=s;
+      x=max(x,sum);
+     }
+    }
+
+    cout<<"MAXIMUM IS : "<<x<<endl;
+}
