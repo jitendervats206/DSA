@@ -1,0 +1,30 @@
+
+*** To find the K smallest value from given array***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    vector<int>arr={6,8,2,10,5,7,4,3};
+    int k=3;
+    priority_queue<int>mx;
+
+    for(int i=0;i<k;i++)
+     mx.push(arr[i]);
+
+
+    for(int i=k;i<arr.size();i++)
+     if(arr[i]<mx.top()){
+      mx.pop();
+      mx.push(arr[i]);
+     }
+    
+    cout<<"min : "<<mx.top();
+
+}
+
