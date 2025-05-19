@@ -1,0 +1,71 @@
+
+*** to find intersection of LL***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x[],int y,node *&head){
+  node *l=NULL;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+    node *head,*head1;
+    head=NULL;
+    head1=NULL;
+
+    int arr[]={1,2,5,6,9};
+    int brr[]={0,4,4,8};
+
+    input(arr,sizeof(arr)/4,head);
+    output(head);
+    input(brr,sizeof(brr)/4,head1);
+    output(head1);
+
+    node*h=new node();
+    h->data=-1;
+    
+    while(head1 and head){
+     if(head1->data==head->data){
+        node *temp=new node();
+        temp->data=head1->data;
+        h->next=temp;
+        h=h->next;
+        head1=head1->next;
+        head=head->next;
+     }
+     else if(head1->data<head->data)
+      head1=head1->next;
+     else
+      head=head->next;
+    }
+
+    output(h);
+
+}
