@@ -1,0 +1,31 @@
+
+*** next bigger element on right ***
+*** Time complexity : O(NLogN)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<vector>
+#include<stack>
+using namespace std;
+int main()
+{
+    int arr[]={8,6,4,7,4,9,10,8,12};
+    vector<int>v(sizeof(arr)/4,-1);
+    stack<int>s;
+    s.push(0);
+
+    for(int i=1;i<sizeof(arr)/4;i++){
+      if(arr[i]>arr[s.top()]){
+        while(!s.empty() and arr[s.top()]<arr[i]){
+        v[s.top()]=arr[i];
+        s.pop();}
+        s.push(i);
+      }
+      else
+        s.push(i); 
+    }
+    for(int i=0;i<v.size();i++)
+     cout<<v[i]<<" ";
+    
+}
