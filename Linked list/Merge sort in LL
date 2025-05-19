@@ -1,0 +1,99 @@
+
+*** apply merge sort in LL ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x[],int y,node *&head){
+  head=NULL;
+  node *l=head;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+node* mid(node *head){
+  node *f=head->next;
+  node *s=head;
+    while(f and f->next){
+      s=s->next;
+      f=f->next->next;
+    }
+    return s;
+}
+
+node *merge(node* &left,node *&right){
+   node*tail=new node;
+   tail->data=0;
+   node *head=tail;
+   while(left && right){
+    if(left->data<=right->data){
+      tail->next=left;
+      tail=tail->next;
+      left=left->next;
+      tail->next=NULL;
+    }
+    else if(left->data>=right->data ){
+      tail->next=right;
+      tail=tail->next;
+      right=right->next;
+      tail->next=NULL;
+    }
+   }
+   if(left==NULL)
+    tail->next=right;
+   else if(right==NULL) 
+    tail->next=left;
+   return head=head->next;
+   
+}
+
+node *mergesort(node *head){
+  if(head->next==NULL)
+   return head;
+  
+  node *m=mid(head);
+  node *left=head;
+  node *right=m->next;
+  m->next=NULL;
+  left=mergesort(left);
+  right=mergesort(right);
+  node*u=merge(left,right);
+  return u;
+}
+
+int main()
+{
+  node *head,*h;
+  int arr[]={4,1,6,7,2,9,9,7};
+  input(arr,sizeof(arr)/4,head);
+  output(head);
+  node*i=mergesort(head);
+  output(i);
+
+}
+
