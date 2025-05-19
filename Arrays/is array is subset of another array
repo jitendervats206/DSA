@@ -1,0 +1,31 @@
+
+*** is array is subset of another array ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<bits/stdc++.h>
+#include<climits>
+using namespace std;
+
+int main()
+{
+  int arr[]={1,9,3,40,4,20,2};
+  int arr1[]={1,2,40};
+  unordered_map<int,int>m;
+
+  for(int i=0;i<sizeof(arr)/4;i++)
+   m[arr[i]]++;
+  
+  for(int i=0;i<sizeof(arr1)/4;i++){
+    if(m[arr1[i]]==0){
+     cout<<"no";
+     break;
+    }
+    else if(i==(sizeof(arr1)/4)-1)
+     cout<<"yes";
+    m[arr1[i]]--;
+  }
+
+}
