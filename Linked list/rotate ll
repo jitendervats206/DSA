@@ -1,0 +1,60 @@
+
+*** To rotate LL ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x,node *&head){
+  node *temp=new node;
+  temp->data=x;
+  temp->next=head;
+  head=temp;
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<" ";
+    h=h->next;
+  }
+}
+
+int main()
+{
+    node *head,*t;
+    head=NULL;
+    int x,k;
+    cout<<"Enter length : ";
+    cin>>k;
+
+    for(int i=0;i<k;i++){
+      cin>>x;
+      input(x,head);
+    }
+    
+    output(head);
+    node *c=head;
+    c=head;
+
+    while(c->next!=NULL)
+    c=c->next;
+    cout<<endl<<"enter no. of rotations : ";
+    cin>>k;
+  
+    for(int i=0;i<k;i++){
+      t=head;
+      head=head->next;
+      c->next=t;
+      c=c->next;
+      t->next=NULL;
+    }
+    output(head);
+
+}
