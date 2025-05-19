@@ -1,0 +1,79 @@
+
+*** reverse an sublist of LL ***
+*** Time complexity : O(N)
+*** Space complexity : O(1)
+
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x[],int y,node *&head){
+  head=NULL;
+  node *l=head;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void reverse(node *&head){
+   node*p=NULL;
+   node*c=head;
+   node*n=head;
+   while(n){
+    n=n->next;
+    c->next=p;
+    p=c;
+    c=n;
+   }
+   head=p;
+}
+
+void output(node *head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+    node *head,*h;
+    int arr[]={1,2,3,4,5,6,7};
+    input(arr,sizeof(arr)/4,head);
+    output(head);
+    h=head;
+    node*h1=h->next->next;
+  
+    for(int i=0;i<2;i++)
+     h1=h1->next;
+    node*n=h1->next;
+    h1->next=NULL;
+    node*m=h->next->next;
+    h->next->next=NULL;
+  
+    reverse(m);
+    h=head;
+    while(h->next)
+     h=h->next;
+    h->next=m;
+    h=head;
+    while(h->next)
+     h=h->next;
+    h->next=n;
+    output(head);
+    
+}
