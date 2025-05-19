@@ -1,0 +1,30 @@
+
+*** delete middle element ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+#include<iostream>
+#include<stack>
+using  namespace std; 
+void mid(stack<int>&s,int x){
+  int a=s.top();
+  s.pop();
+  if(s.size()==x)
+   return;
+  mid(s,x);
+  s.push(a);
+  return; 
+}
+
+int main()
+{
+  stack<int>s;
+  for(int i=4;i>0;i--)
+   s.push(i);
+  int x=(s.size()+1)/2;
+  mid(s,s.size()-x);
+  while(!s.empty()){
+    cout<<s.top()<<" ";
+    s.pop();
+  }
+}
