@@ -1,0 +1,73 @@
+
+*** delete nodes have greator value on right side***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x[],int y,node *&head){
+  head=NULL;
+  node *l=head;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void reverse(node *&head){
+    node*p=NULL;
+    node*c=head;
+    node*n=head;
+    while(n){
+     n=n->next;
+     c->next=p;
+     p=c;
+     c=n;
+    }
+    head=p;
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+    node *head,*h,*u=new node;
+    int arr[]={12,15,10,11,5,6,2,3};
+    input(arr,sizeof(arr)/4,head);
+    output(head);     
+    h=head;
+     reverse(head);
+     h=head;
+     int x=0;
+    
+     while(head->next){
+         x=max(x,head->data);
+         if(head->next->data<x)
+          head->next=head->next->next;
+         else
+         head=head->next;
+     }
+     reverse(h);
+    output(h);
+
+}
