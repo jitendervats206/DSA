@@ -1,0 +1,66 @@
+
+
+*** swap nodes from first and last***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x[],int y,node *&head){
+  node *l=NULL;
+  head=NULL;
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<"->";
+    h=h->next;
+  }
+  cout<<endl;
+}
+
+int main()
+{
+   node *head;
+   int k=7;
+   int arr[]={5,10,8,2,9,3,7};
+   input(arr,sizeof(arr)/4,head);
+   output(head);
+   
+   node*h=head;
+   for(int i=0;i<k-1;i++)
+    h=h->next;
+   
+   node*f=head;
+   for(int i=0;i<k;i++)
+    f=f->next;
+   node*s=head;
+   if(f!=NULL)
+   while(f){
+    s=s->next;
+    f=f->next;
+   }
+   int x=h->data;
+   h->data=s->data;
+   s->data=x;
+   output(head);
+
+}
