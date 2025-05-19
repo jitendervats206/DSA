@@ -1,0 +1,31 @@
+
+*** To find the 3 indexes with given value from array***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    int arr[]={1,4,6,8,10,45};
+    int start,end,s;
+    int target=24;
+
+    for(int i=0;i<(sizeof(arr)/4)-2;i++){
+     start=i++;
+     end=(sizeof(arr)/4)-1;
+     s=target-arr[i];
+
+     while(start<end){
+      if(arr[start]+arr[end]>s)
+       end--;
+      else if(arr[start]+arr[end]<s)
+       start++;
+      else{
+       cout<<arr[i]<<","<<arr[start]<<","<<arr[end];
+       break;}
+     }
+    }
+
+}
