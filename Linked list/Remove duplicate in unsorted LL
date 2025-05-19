@@ -1,0 +1,57 @@
+
+*** To remove duplicate in unsorted LL ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<unordered_map>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+void input(int x,node *&head){
+  node *temp=new node;
+  temp->data=x;
+  temp->next=head;
+  head=temp;
+}
+
+void output(node *&head){
+  node *h=head;
+  while(h!=NULL){
+    cout<<h->data<<" ";
+    h=h->next;
+  }
+}
+
+int main()
+{
+    node *head,*t,*c,*h;
+    unordered_map<int,int>m;
+    head=NULL;
+    int x,k;
+
+    int arr[]={5,2,2,4,3,6};
+    for(int i=0;i<sizeof(arr)/4;i++)
+     input(arr[i],head);
+    output(head);
+
+    cout<<endl;
+    h=head;
+    c=head;
+    m[h->data]++;
+    while(h->next){
+      if(m[h->next->data]>0)
+        h->next=h->next->next;
+      else{
+        m[h->next->data]=1;
+        h=h->next;
+      }
+    }
+    output(head);
+     
+}
