@@ -1,0 +1,67 @@
+
+*** To find subarray product less than k***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+#include<iostream>
+#include<vector>
+using namespace std;
+int main()
+{
+    vector<int>v={2,5,10,8,100,1000,5,15};
+    vector<int>v1;
+    int total=0,sum=1;
+
+    for(int i=0;i<v.size();i++){
+      sum=sum*v[i];
+      v1.push_back(v[i]);
+      if(sum<999)
+      for(int k=0;k<v1.size();k++)
+        cout<<v1[k]<<" ";
+        cout<<endl;
+     for(int j=i+1;j<v.size();j++){
+      sum=sum*v[j];
+      if(sum<999){
+        total++;
+        v1.push_back(v[j]);
+        for(int k=0;k<v1.size();k++)
+         cout<<v1[k]<<" ";
+        cout<<endl;
+      }
+      else 
+       break;
+     }
+    v1.clear();
+    sum=1;
+    }
+    cout<<"total :"<<total<<endl;
+}
+
+
+
+*** ALTERNATE ***
+
+*** Time complexity : O(NLogN)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+int main()
+{
+    vector<int>v={2,5,10,8,100,1000,5,15};
+    int total=0,pro=1,start=0,end=0,l=0,k=999;
+
+    while(end<v.size()){
+        pro=pro*v[end];
+        while(pro>=k and start<=end){
+           pro=pro/v[start];
+           start++;
+        }
+        total=total+1+(end-start);
+        end++;
+    }
+
+    cout<<"total : "<<total<<endl;
+}
