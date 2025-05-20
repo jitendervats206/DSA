@@ -1,0 +1,94 @@
+
+*** find inorder predessor and sucssor ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<queue>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;
+};
+
+node* bst(node *&root,int val){
+    if(root==NULL){
+        node*temp=new node;
+        temp->data=val;
+        temp->left=NULL;
+        temp->right=NULL;
+        return temp;
+    }
+    if(val<root->data)
+       root->left=bst(root->left,val);
+    else
+      root->right=bst(root->right,val);
+    return root;
+}
+
+void level(queue<node*>q){
+    if(q.empty())
+     return;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+int inorder(node *root,int key,int &pre,int &suc){
+    if(root==NULL)
+     return 0;
+    if(root->data==key){
+        if(root->left){
+            node*temp=root->left;
+            while(temp->right)
+             temp=temp->right;
+            pre=temp->data;
+        }
+        if(root->right){
+            node*temp=root->right;
+            while(temp->left)
+             temp=temp->left;
+            suc=temp->data;  
+        }
+        return 1;
+    }
+    if(key<root->data){
+     suc=root->data;
+     inorder(root->left,key,pre,suc);
+    }
+    else if(key>root->data){
+     pre=root->data;
+     inorder(root->right,key,pre,suc);
+    }
+}
+
+int main()
+{
+    int arr[]={11,6,12,5,9,13,3,10};
+    node*root=NULL;
+    queue<node*>q;
+    for(int i=0;i<sizeof(arr)/4;i++)
+     root=bst(root,arr[i]);
+    q.push(root);
+    cout<<"bst : ";
+    level(q); 
+    int pre=-1,suc=-1,key=13;
+    if(inorder(root,key,pre,suc)){
+     cout<<endl<<"inorder predecssor : "<<pre;
+     cout<<endl<<"inorder successor : "<<suc;
+    }
+    else{
+     pre=-1;suc=-1;
+     cout<<endl<<"inorder p1redecssor : "<<pre;
+     cout<<endl<<"inorder s1uccessor : "<<suc;
+    }
+    
+}
+
