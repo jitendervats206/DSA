@@ -1,0 +1,64 @@
+
+*** diagnol traversal ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *left,*right;
+};
+
+void find(node* root,int pos,int &left){
+   if(root==NULL)
+    return;
+
+   left=max(left,pos);
+   find(root->left,pos+1,left);
+   find(root->right,pos,left);
+}
+
+node *input(){
+    int x;
+    cin>>x;
+    if(x<0)
+     return 0;
+
+    node *temp=new node;
+    temp->data=x;
+    cout<<"enter "<<x<<" left node : ";
+    temp->left=input();
+    cout<<"enter "<<x<<" right node : ";
+    temp->right=input();
+    return temp;
+}
+
+void diagnol(node *root,vector<vector<int>>&v,int pos){
+  if(root==NULL)
+   return;
+  
+  v[pos].push_back(root->data);
+  diagnol(root->left,v,pos+1);
+  diagnol(root->right,v,pos);
+  
+}
+
+int main()
+{ 
+    node *root;
+    int l=0,r=0;
+    cout<<"enter root node : ";
+    root=input();
+    find(root,0,l);
+    vector<vector<int>>v(abs(l)+1);
+    diagnol(root,v,0);
+
+    for(int i=0;i<v.size();i++)
+     for(int j=0;j<v[i].size();j++)
+      cout<<v[i][j]<<" ";
+
+}
