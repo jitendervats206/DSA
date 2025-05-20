@@ -1,0 +1,68 @@
+
+*** find nodes that lie in range ***
+*** Time complexity : O(N)
+*** Space complexity : O(N)
+
+
+#include<iostream>
+#include<queue>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;
+};
+
+node* bst(node *&root,int val){
+    if(root==NULL){
+        node*temp=new node;
+        temp->data=val;
+        temp->left=NULL;
+        temp->right=NULL;
+        return temp;
+    }
+    if(val<root->data)
+       root->left=bst(root->left,val);
+    else
+      root->right=bst(root->right,val);
+    return root;
+}
+
+void range(node*root,int n1,int n2){
+    if(root==NULL)
+     return; 
+  
+    range(root->left,n1,n2);
+    if(root->data>n1 and root->data<n2)
+     cout<<root->data<<" "; 
+    range(root->right,n1,n2);
+
+}
+
+void level(queue<node*>q){
+    if(q.empty())
+     return;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+int main()
+{
+    int arr[]={100,200,85,30,90,300,180,70,20,68,74,65,81,72};
+    node*root=NULL;
+    queue<node*>q;
+    for(int i=0;i<sizeof(arr)/4;i++)
+     root=bst(root,arr[i]);
+    q.push(root);
+    cout<<"bst : ";
+    level(q);
+    cout<<endl<<"nodes are : "; 
+    range(root,60,80);
+}
+
