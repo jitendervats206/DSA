@@ -1,0 +1,58 @@
+
+*** To fi***nd genova wines
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+  stack<pair<int,int>>s;
+  int arr[]={-100,-100,-100,100,100,100};
+  int i=(sizeof(arr)/4)-1,count=0,z;
+
+  while(i>=0){
+    if(s.empty())
+     s.push({arr[i],i});
+    else if((arr[i]>0 and s.top().first>0) or (arr[i]<0 and s.top().first<0))
+     s.push({arr[i],i});
+    else{
+     z=(min(abs(arr[i]),abs(s.top().first))*(abs(i-s.top().second)));
+     cout<<z<<" ";
+     count=count+z;
+     if(abs(arr[i])>abs(s.top().first)){
+      z=arr[i]+s.top().first;
+      s.pop();
+      s.push({z,i});
+     }
+     else if(abs(arr[i])<abs(s.top().first))
+      s.top().first=arr[i]+s.top().first;
+     else 
+      s.pop();
+    }
+    i--;
+  }
+
+  while(!s.empty()){
+   pair<int,int>x=s.top();
+   s.pop();
+   z=(min(abs(x.first),abs(s.top().first))*(abs(x.second-s.top().second)));
+   cout<<z<<" ";
+   count=count+z;
+   if(abs(x.first)>abs(s.top().first)){
+    z=x.first+s.top().first;
+    s.pop();
+    s.push({z,i});
+   }
+   else if(abs(x.first)<abs(s.top().first))
+    s.top().first=x.first+s.top().first;
+   else 
+    s.pop();
+  }
+  cout<<endl<<count;
+
+}
+
