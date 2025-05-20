@@ -1,0 +1,36 @@
+
+*** quick sort in array ***
+*** Time complexity : O(N)
+*** Space complexity : O(1)
+
+
+#include<iostream>
+using namespace std;
+int partition(int arr[],int start,int end){
+    int pos=start;
+    for(int i=start;i<=end;i++)
+        if(arr[i]<=arr[end]){
+         swap(arr[i],arr[pos]);
+         pos++;
+        }
+    return pos-1;
+}
+
+void qs(int arr[],int start,int end){
+   if(start>=end)
+    return ;
+
+   int pivot=partition(arr,start,end);
+   qs(arr,start,pivot-1);
+   qs(arr,pivot+1,end);  
+}
+
+int main()
+{
+   int arr[]={5,2,4,9,3,7,8};
+   qs(arr,0,(sizeof(arr)/4)-1); 
+   for(int i=0;i<sizeof(arr)/4;i++)
+    cout<<arr[i]<<" ";
+    
+}
+
