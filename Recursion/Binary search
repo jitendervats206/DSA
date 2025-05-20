@@ -1,0 +1,33 @@
+
+*** find element through binary search ***
+*** Time complexity : O(NLogN)
+*** Space complexity : O(N)
+
+
+#include<iostream>
+using namespace std;
+void bs(int arr[],int start,int end,int target){
+  int mid=start+(end-start)/2;
+  
+  if(arr[mid]==target){
+   cout<<mid;
+   return;
+  }
+  if(start==end){
+    cout<<-1;
+    return;
+  }
+
+  if(target<arr[mid])
+   bs(arr,start,mid-1,target);
+  else
+   bs(arr,mid+1,end,target);
+}
+
+int main()
+{
+   int arr[]={1,5,9,12,17,19};
+   int target=1;
+   bs(arr,0,(sizeof(arr)/4)-1,target);
+
+}
