@@ -1,0 +1,91 @@
+
+
+*** make tree with help of LL ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *next;
+};
+
+class tree{
+  public:
+  int data;
+  tree *left,*right;
+  tree(int val){
+    data=val;
+    left=right=NULL;
+  }
+};
+
+void input(int x[],int y,node *&head){
+  head=NULL;
+  node *l=head; 
+  for(int i=0;i<y;i++){
+   node *temp=new node;
+   temp->data=x[i];
+   if(head==NULL)
+    head=temp;
+   else
+    l->next=temp;
+   l=temp;
+   l->next=NULL;
+  }
+}
+
+void output(node *head){
+  node *h=head;
+  while(h!=NULL){
+   cout<<h->data<<"->";
+   h=h->next;
+  }
+  cout<<endl;
+}
+
+void level(queue<tree*>q){
+    if(q.empty())
+     return;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+int main()
+{
+   node *head;
+   int arr[]={1,2,3,4,5,6,7,8};
+   input(arr,sizeof(arr)/4,head);
+   output(head);
+   queue<tree*>q;
+
+   int x=head->data;
+   tree*root=new tree(x);
+   q.push(root);
+   
+    while(!q.empty()){
+     if(head->next){
+        head=head->next;
+        q.push(q.front()->left=new tree(head->data));
+     }
+     if(head->next){
+        head=head->next;
+        q.push(q.front()->right=new tree(head->data));
+     }
+     q.pop();
+    }
+   
+    q.push(root);
+    level(q);
+
+}
