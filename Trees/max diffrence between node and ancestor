@@ -1,0 +1,82 @@
+
+*** To find max diffrence b/w node and ancestor***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+
+#include<iostream>
+#include<queue>
+#include<climits> 
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;  
+   node(int val){
+    data=val;
+    left=right=NULL;
+   }
+};
+
+void level(queue<node*>q){
+    if(q.empty())
+     return;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+int anc(node*root,int &mx){
+    if(root==NULL)
+     return 0;
+    
+    if(!root->left and !root->right)
+     return root->data;
+    
+    int l=anc(root->left,mx);
+    int r=anc(root->right,mx);
+
+    if(root->left and root->right){
+      mx=max(mx,max(root->data-l,root->data-r));
+      int q=min(root->data,l);
+      return min(q,r);
+    }
+    if(root->left){
+      mx=max(mx,root->data-l);
+      return min(root->data,l);
+    }
+    if(root->right){
+      mx=max(mx,root->data-r);
+      return min(root->data,r);
+    }
+
+}
+
+int main()
+{ 
+    node *root,*n1,*n2;
+    int mx=INT_MIN;
+    root=new node(8);     
+    root->left=new node(3);
+    root->right=new node(10);
+    root->right->right=new node(14);
+    root->left->left=new node(1);
+    root->left->right=new node(6);
+    root->left->right->left=new node(4);
+    root->left->right->right=new node(7);
+    root->right->right->left=new node(13);
+
+    queue<node*>q;
+    q.push(root);
+    level(q);
+
+    anc(root,mx);
+    cout<<endl<<mx;
+
+}
