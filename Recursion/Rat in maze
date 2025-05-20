@@ -1,0 +1,54 @@
+
+*** find path for rat in maze ***
+*** Time complexity : O(N*N)
+*** Space complexity : O(N)
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+void rat(vector<vector<int>>mat,vector<vector<int>>visited,vector<string> &str,string path,int i,int j,int n){
+  if(i==n-1 and j==n-1){
+    str.push_back(path);
+    return;
+  }
+
+  if(i<0 or j<0 or i==n or j==n or mat[i][j]==0 or visited[i][j]==1) 
+   return;
+  
+  path.push_back('U');
+  visited[i][j]=1;
+  rat(mat,visited,str,path,i-1,j,n);
+  path.pop_back();
+  path.push_back('D');
+  rat(mat,visited,str,path,i+1,j,n);
+  path.pop_back();
+
+  path.push_back('L');
+  rat(mat,visited,str,path,i,j-1,n);
+  path.pop_back();
+
+  path.push_back('R');
+  rat(mat,visited,str,path,i,j+1,n);
+  path.pop_back();
+  visited[i][j]=0;
+
+}
+
+int main()
+{
+  vector<vector<int>>mat(4,vector<int>(4,1));
+  vector<vector<int>>visited(4,vector<int>(4,0));
+  vector<string>str;
+  string path;
+  int i=0,j=0,n=mat.size();
+  mat[0][1]=0; 
+  mat[0][2]=0; 
+  mat[0][3]=0; 
+  mat[1][2]=0;  
+
+  rat(mat,visited,str,path,i,j,n);
+  for(int i=0;i<str.size();i++)
+   cout<<str[i]<<endl;
+
+}
