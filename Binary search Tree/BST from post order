@@ -1,0 +1,57 @@
+
+*** make  BST from postorder ***
+*** Time complexity : O(N)
+*** Space complexity : O(N)
+
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<climits>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;
+};
+
+node* postbst(vector<int>&postorder,int &index,int l,int r){
+    if(index<0 or postorder[index]<l or postorder[index]>r)
+     return NULL;
+
+    node*root=new node;
+    root->data=postorder[index];
+    root->left=NULL;
+    root->right=NULL;
+    index--;
+    root->right=postbst(postorder,index,root->data,r);
+    root->left=postbst(postorder,index,l,root->data);
+    return root;
+}
+
+void level(queue<node*>q){
+    if(q.empty())
+     return;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+int main()
+{
+    node*root=NULL,*root1=NULL;
+    queue<node*>q;
+    int left,right,index; 
+    vector<int>postorder={1,7,5,50,40,10}; 
+    left=INT_MIN,right=INT_MAX,index=postorder.size()-1;
+    root1=postbst(postorder,index,left,right);
+    q.pop();
+    q.push(root1);
+    cout<<endl<<"postorder bst : ";
+    level(q);
+    
+}
