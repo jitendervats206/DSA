@@ -1,0 +1,77 @@
+
+*** to traverse tree levels in spiral form ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<stack>
+using namespace std;
+class node{
+   public:
+   int data;
+   node *left,*right;
+};
+
+node *input(){
+    int x;
+    cin>>x;
+    if(x<0)
+     return 0;
+
+    node *temp=new node;
+    temp->data=x;
+    cout<<"enter "<<x<<" left node : ";
+    temp->left=input();
+    cout<<"enter "<<x<<" right node : ";
+    temp->right=input();
+    return temp;
+}
+
+void spiral(stack<node*>s1,stack<node*>s2,int a,int b){
+    if(s1.empty() and s2.empty())
+     return;
+   
+   if(a==1 ){
+       node* x=s1.top();
+       cout<<x->data<<" ";
+       if(x->right)
+        s2.push(x->right);
+       if(x->left)
+        s2.push(x->left);
+       s1.pop();
+       if(s1.size()==0){
+           a=0;
+           b=1;
+       }
+   }
+   else{
+       node* x=s2.top();
+       cout<<x->data<<" ";
+       if(x->left)
+        s1.push(x->left);
+       if(x->right)
+        s1.push(x->right);
+       s2.pop();
+       if(s2.size()==0){
+           a=1;
+           b=0;
+       }  
+   }
+   if(a==1)
+    spiral(s1,s2,1,0);
+   else
+    spiral(s1,s2,0,1);
+}
+
+int main()
+{
+    node *root;
+    stack<node*>s1,s2;
+    cout<<"enter root node : ";
+    root=input();
+    s1.push(root);
+    cout<<"spiral form : ";
+    spiral(s1,s2,1,0);
+
+}
