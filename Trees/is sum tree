@@ -1,0 +1,89 @@
+
+*** check tree is sum tree ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *left,*right;
+};
+
+node *input(){
+    int x;
+    cin>>x;
+    if(x<0)
+     return 0;
+
+    node *temp=new node;
+    temp->data=x;
+    cout<<"enter "<<x<<" left node : ";
+    temp->left=input();
+    cout<<"enter "<<x<<" right node : ";
+    temp->right=input();
+    return temp;
+}
+
+int issumtree(node*root){
+    if(root==NULL)
+     return 0;
+
+    if(!root->left and !root->right) 
+     return root->data;
+    int a=issumtree(root->left);
+    int b=issumtree(root->right);
+
+    if(a+b!=root->data)
+     return 0;
+    else
+     return a+b+root->data;
+    
+}
+
+int makesumtree(node* &root){
+    if(root==NULL)
+     return 0;
+    if(!root->left and !root->right) 
+    return root->data;
+    int a=makesumtree(root->left);
+    int b=makesumtree(root->right);
+
+    if(a+b!=root->data){
+     root->data=a+b;
+     return a+b+root->data;
+    }
+    else
+     return a+b+root->data;
+    
+}
+
+void preorder(node*root){
+    if(root==NULL)
+     return;
+
+    cout<<root->data<<" ";
+    preorder(root->left);
+    preorder(root->right);
+}
+
+int main()
+{ 
+    node *root;
+    int x=0;
+    cout<<"enter root node : ";
+    root=input();
+    if(issumtree(root)>0)
+     cout<<"yes";
+    else{
+     cout<<"no"<<endl<<"before : ";
+     preorder(root);
+     makesumtree(root);
+     cout<<endl<<"after : ";
+     preorder(root);
+    }
+
+}
