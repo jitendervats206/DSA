@@ -1,0 +1,78 @@
+
+*** make LL from BST ***
+*** Time complexity : O(N)
+*** Space complexity : O(N)
+
+
+#include<iostream>
+#include<queue>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;
+};
+
+node* bst(node *&root,int val){
+    if(root==NULL){
+        node*temp=new node;
+        temp->data=val;
+        temp->left=NULL;
+        temp->right=NULL;
+        return temp;
+    }
+    if(val<root->data)
+       root->left=bst(root->left,val);
+    else
+      root->right=bst(root->right,val);
+    return root;
+}
+
+void level(queue<node*>q){
+    if(q.empty())
+     return;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+void link(node* root,node *&prev){
+    if(root==NULL)
+     return;
+
+    link(root->left,prev);
+    prev->right=root;
+    prev=root;
+    prev->left=NULL;
+    link(root->right,prev);
+}
+
+int main()
+{
+    int arr[]={20,30,10,14,25,35,2,1,3};
+    node*root=NULL,*prev,*dummy=new node();
+    queue<node*>q;
+    for(int i=0;i<sizeof(arr)/4;i++)
+     root=bst(root,arr[i]);
+    q.push(root);
+    cout<<"bst : ";
+    level(q); 
+
+    dummy->data=-1;
+    prev=dummy;
+    cout<<endl<<"sorted travesal of tree in form of LL : ";
+    link(root,prev);
+    prev->left=prev->right=NULL;
+    prev=dummy->right;
+    while(prev){
+      cout<<prev->data<<" ";
+      prev=prev->right;
+    }
+
+}
+
