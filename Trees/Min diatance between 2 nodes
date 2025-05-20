@@ -1,0 +1,74 @@
+
+*** To find min distance of 2 nodes ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *left,*right;
+};
+
+node *input(){
+    int x;
+    cin>>x;
+    if(x<0)
+     return 0;
+
+    node *temp=new node;
+    temp->data=x;
+    cout<<"enter "<<x<<" left node : ";
+    temp->left=input();
+    cout<<"enter "<<x<<" right node : ";
+    temp->right=input();
+    return temp;
+}
+
+node* lca(node*&root,node*&n1,node*&n2){
+    if(root==NULL)
+     return NULL;
+    
+    if(root==n1 or root==n2)
+     return root;
+
+    node* left=lca(root->left,n1,n2);
+    node* right=lca(root->right,n1,n2);
+
+    if(left and right)
+     return root;
+    if(left)
+     return left;
+    else
+     return right;
+    
+}
+
+int distance(node *root,int d,node *target){
+    if(root==NULL)
+     return 0;
+    if(root->data==target->data)
+     return d;
+    int a=distance(root->left,d+1,target);
+    int b=distance(root->right,d+1,target);
+    return a+b;
+}
+
+int main()
+{ 
+    node *root,*n1,*n2;
+    int d=0;
+    cout<<"enter root node : ";
+    root=input();
+    n1=root->left->left;
+    n2=root->left->right->right;
+    node* LCA=lca(root,n1,n2);
+    int x=distance(LCA,d,n1);
+    d=0;
+    int y=distance(LCA,d,n2);
+    cout<<endl<<"distance b/w 2 nodes is : "<<x+y;
+   
+}
