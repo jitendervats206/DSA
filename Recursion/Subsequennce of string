@@ -1,0 +1,33 @@
+
+*** subsequencs of string ***
+*** Time complexity : O(N)
+*** Space complexity : O(1)
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+void sub(string str,vector<string> &v,string temp,int index,int n){
+  if(index==n){
+    v.push_back(temp);
+    return;
+  }
+
+  sub(str,v,temp,index+1,n);
+  temp.push_back(str[index]);
+  sub(str,v,temp,index+1,n);
+  temp.pop_back();
+    
+}
+
+int main()
+{
+    string str="123"; 
+    string temp;
+    vector<string>v;
+    sub(str,v,temp,0,str.size());
+    for(int i=1;i<v.size();i++)
+     cout<<v[i]<<endl;
+     
+}
+
