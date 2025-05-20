@@ -1,0 +1,145 @@
+
+
+*** merge two bst to vector ***
+*** Time complexity : O(N)
+*** Space complexity : O(N)
+
+
+#include<iostream>
+#include<vector>
+#include<stack>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;
+};
+
+node* bst(node *&root,int val){
+    if(root==NULL){
+        node*temp=new node;
+        temp->data=val;
+        temp->left=NULL;
+        temp->right=NULL;
+        return temp;
+    }
+    if(val<root->data)
+       root->left=bst(root->left,val);
+    else
+      root->right=bst(root->right,val);
+    return root;
+}
+
+void inorder(node*root,vector<int>&v){
+    if(root==NULL)
+     return;
+
+    inorder(root->left,v);
+    v.push_back(root->data);
+    inorder(root->right,v);
+
+}
+
+int main()
+{
+    int arr1[]={5,6,3,4,2};
+    int arr2[]={2,3,1,7,6};
+    vector<int>v,v1,v2;
+    node*root1=NULL,*root2=NULL;
+    for(int i=0;i<sizeof(arr1)/4;i++)
+      root1=bst(root1,arr1[i]);
+    for(int i=0;i<sizeof(arr2)/4;i++)
+     root2=bst(root2,arr2[i]);
+    inorder(root1,v1);
+    inorder(root2,v2);
+
+    cout<<"inorder 1 : ";
+    for(int k=0;k<v1.size();k++)
+     cout<<v1[k]<<" ";
+    cout<<endl<<"inorder 2 : ";
+    for(int k=0;k<v2.size();k++)
+     cout<<v2[k]<<" ";
+
+    stack<node*>s1,s2;
+    node*temp=root1;
+    while(temp){
+        s1.push(temp);
+        temp=temp->left;
+    }
+    temp=root2;
+    while(temp){
+        s2.push(temp);
+        temp=temp->left;
+    }
+
+    while(!s1.empty() and !s2.empty()){
+        if(s1.top()->data<s2.top()->data){
+            v.push_back(s1.top()->data);
+            if(s1.top()->right){
+             temp=s1.top()->right;
+             s1.pop();
+             while(temp){
+                s1.push(temp);
+                temp=temp->left;
+             }
+            }
+            else
+             s1.pop();
+        }
+        else if(s2.top()->data<s1.top()->data){
+            v.push_back(s2.top()->data);
+            if(s2.top()->right){
+             temp=s2.top()->right;
+              s2.pop();
+             while(temp){
+                s2.push(temp);
+                temp=temp->left;
+             }
+            }
+            else
+             s2.pop();
+        }
+        else{
+            v.push_back(s1.top()->data);
+            v.push_back(s2.top()->data);
+            if(s2.top()->right){
+             temp=s2.top()->right;
+              s2.pop();
+             while(temp){
+                s2.push(temp);
+                temp=temp->left;
+             }
+            }
+            else
+             s2.pop();
+            
+            if(s1.top()->right){
+              temp=s1.top()->right;
+              s1.pop();
+             while(temp){
+                s1.push(temp);
+                temp=temp->left;
+             }
+            }
+            else
+             s1.pop();
+        }
+
+    }
+
+    while(!s1.empty()){
+        v.push_back(s1.top()->data);
+        s1.pop();
+    }
+    while(!s2.empty()){
+        v.push_back(s2.top()->data);
+        s2.pop();
+    }
+
+    cout<<endl<<"merged : ";
+    for(int i=0;i<v.size();i++)
+     cout<<v[i]<<" ";
+   
+}
+
+
