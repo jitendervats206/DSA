@@ -1,0 +1,38 @@
+
+*** find pairs of parenthesis of given size ***
+*** Time complexity : O(N)
+*** Space complexity : O(N)
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+void pr(vector<string> &v, string&temp,int left,int right,int n){
+    if(left==n and right==n){
+      v.push_back(temp);
+      return;
+    }
+    
+    if(left<n){
+     temp.push_back('(');
+     pr(v,temp,left+1,right,n);
+     temp.pop_back();
+    }
+    if(right<left){
+     temp.push_back(')');
+     pr(v,temp,left,right+1,n);
+     temp.pop_back();
+    }
+    
+}
+
+int main()
+{
+    int size=3; 
+    string temp;
+    vector<string>v;
+    pr(v,temp,0,0,size);
+    for(int i=0;i<v.size();i++)
+     cout<<v[i]<<endl;
+     
+}
