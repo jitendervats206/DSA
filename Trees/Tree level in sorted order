@@ -1,0 +1,71 @@
+
+*** sort the tree levels and print it ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;  
+   node(int val){
+    data=val;
+    left=right=NULL;
+   }
+};
+
+void level(queue<node*>q){
+    if(q.empty())
+     return;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+int main()
+{
+    node *root;
+    queue<node*>q;
+    root=new node(5);     
+    root->left=new node(8);
+    root->left->left=new node(1);
+    root->left->right=new node(9);
+    root->right=new node(2);
+    root->right->right=new node(6);
+    root->right->left=new node(4);
+
+    q.push(root);
+    level(q);
+    q.pop();
+    cout<<endl;
+    q.push(root);
+    
+    while(!q.empty()){
+        int n=q.size();
+        vector<int>v;
+
+        while(n>0){
+            n--;
+            if(q.front()->left)
+             q.push(q.front()->left);
+            if(q.front()->right) 
+             q.push(q.front()->right);
+            v.push_back(q.front()->data);
+            q.pop();
+        }
+
+        sort(v.begin(),v.end());
+        for(int i=0;i<v.size();i++)
+         cout<<v[i]<<" ";
+
+    }
+
+}
