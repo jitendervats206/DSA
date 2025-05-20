@@ -1,0 +1,87 @@
+
+*** find midian BST ***
+*** Time complexity : O(N)
+*** Space complexity : O(N)
+
+
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;
+   node(int x){
+    data=x;
+    left=right=NULL;
+   }
+};
+
+void level(queue<node*>q){
+    if(q.empty())
+     return ;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+void n(node*root,int &nodes){
+    if(root==NULL)
+     return;
+    
+    nodes++;
+    n(root->left,nodes);
+    n(root->right,nodes);
+}
+
+void midian(node* root,int &index,node*&prev,node*&curr,int &t){
+    if(root==NULL)
+     return;
+   
+    midian(root->left,index,prev,curr,t);
+    if(index<t)
+     curr=root;
+    index++;
+    if(index<t)
+     prev=root;
+    midian(root->right,index,prev,curr,t);
+    
+}
+
+int main()
+{
+    node*root=NULL;
+    queue<node*>q;
+    root=new node(6);
+    root->left=new node(3);
+    root->left->right=new node(4);
+    root->left->left=new node(1);
+    root->right=new node(8);
+    root->right->right=new node(9);
+    root->right->left=new node(7);
+
+    q.push(root);
+    cout<<"bst : ";
+    level(q); 
+    int nodes=0,index=0;
+    n(root,nodes);
+    int t=(nodes/2)+1; 
+    node*prev=NULL,*curr=NULL;
+    midian(root,index,prev,curr,t);
+    cout<<endl<<"midian is : ";
+   
+    if(nodes%2!=0)
+     cout<<curr->data;
+    else
+     cout<<(curr->data+prev->data)/2;
+
+  
+}
+
+
