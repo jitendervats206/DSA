@@ -1,0 +1,34 @@
+
+*** To find min cost of ropes after joining ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int rope[]={4,2,7,6,9};
+  int q=0,w=0;
+  priority_queue<int,vector<int>,greater<int>>mn;
+
+  for(int i=0;i<sizeof(rope)/4;i++)
+   mn.push(rope[i]);
+
+  while(!mn.empty()){
+    w=mn.top();
+    mn.pop();
+    if(mn.empty())
+     break;
+    else{
+     w=w+mn.top();
+     mn.pop();
+    }
+    q=q+w;
+    mn.push(w);
+  }
+  cout<<q;
+}
+
