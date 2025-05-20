@@ -1,0 +1,96 @@
+
+*** To check two trees are identical or not ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+#include<iostream>
+using namespace std;
+class node{
+   public:
+   int data;
+   node *left,*right;
+};
+
+void preorder1(node *r1){
+    if(r1==NULL)
+     return;
+    cout<<r1->data<<" ";
+    preorder1(r1->left);
+    preorder1(r1->right);
+}
+
+node *input1(){
+    int x;
+    cin>>x;
+    if(x<0)
+     return 0;
+
+    node *temp=new node;
+    temp->data=x;
+    temp->left=temp->right=NULL;
+    cout<<"enter "<<x<<" left1 node : ";
+    temp->left=input1();
+    cout<<"enter "<<x<<" right1 node : ";
+    temp->right=input1();
+    return temp;
+}
+
+void preorder2(node *r2){
+    if(r2==NULL)
+     return;
+    cout<<r2->data<<" ";
+    preorder1(r2->left);
+    preorder1(r2->right);
+}
+
+node *input2(){
+    int x;
+    cin>>x;
+    if(x<0)
+     return 0;
+
+    node *temp=new node;
+    temp->data=x;
+    temp->left=temp->right=NULL;
+    cout<<"enter "<<x<<" left2 node : ";
+    temp->left=input2();
+    cout<<"enter "<<x<<" right2 node : ";
+    temp->right=input2();
+    return temp;
+}
+
+int check(node *&root1,node *&root2){
+    if((root1->data!=root2->data))
+        return 0;
+
+    if(root1==NULL and root2==NULL)
+     return 1;
+  
+   int a,b;
+   if(root1->left and root2->left)
+    a=check(root1->left,root2->left);
+   else
+    return 0;
+   if(root1->right and root2->right)
+    b=check(root1->right,root2->right);
+   else 
+    return 0;
+   return a and b; 
+
+}
+
+int main()
+{
+    node *root1,*root2;
+    cout<<"enter root1 node : ";
+    root1=input1();
+    cout<<endl<<"enter root2 node : ";
+    root2=input2();
+
+    cout<<"preorder1 : ";
+    preorder1(root1);
+    cout<<endl<<"preorder2 : ";
+    preorder2(root2);
+    cout<<endl<<"identical : "<<check(root1,root2);
+
+}
