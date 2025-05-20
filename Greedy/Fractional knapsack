@@ -1,0 +1,34 @@
+
+*** adjust wieght with value ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int value[]={60,100,120};
+    int wieght[]={10,20,30};
+    float x=50,sum=0;
+    priority_queue<pair<int,int>>mx;
+
+    for(int i=0;i<sizeof(value)/4;i++)
+      mx.push({value[i]/wieght[i],i});
+    
+    while(!mx.empty() and x!=0){
+      if(x>=wieght[mx.top().second]){
+       x=x-wieght[mx.top().second];
+       sum=sum+value[mx.top().second];
+      }
+      else{
+        float y=value[mx.top().second]/wieght[mx.top().second];
+        sum=sum+(x*y);
+        x=0;
+      }
+      mx.pop();
+    }
+    cout<<sum;
+}
