@@ -1,0 +1,114 @@
+
+
+*** find largst BST subtree size ***
+*** Time complexity : O(N)
+*** Space complexity : O(N)
+
+
+#include<iostream>
+#include<queue>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;
+   node(int x){
+    left=right=NULL;
+    data=x;
+   }
+};
+
+class pack{
+   public:
+    bool bst;
+    int min,max,size;
+    pack(int data){
+        bst=1;
+        size=1;
+        min=data;
+        max=data;
+    }
+};
+
+void level(queue<node*>q){
+    if(q.empty())
+     return;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+pack* subtree(node*root,int &mxsize){
+    if(!root->left and !root->right)
+      return new pack(root->data);
+
+    else if(root->left and !root->right){
+        pack*h=subtree(root->left,mxsize);
+        if(h->bst==1 and h->max<root->data){
+            h->size++;
+            mxsize=max(h->size,mxsize);
+            h->max=root->data;
+        }
+        else
+         h->bst=0;
+        return h;
+    }
+    else if(!root->left and root->right){
+        pack*h=subtree(root->right,mxsize);
+        if(h->bst==1 and h->min>root->data){
+            h->size++;
+            mxsize=max(h->size,mxsize);
+          
+            h->min=root->data;
+        }
+        else
+         h->bst=0;
+        return h;
+    }
+    else{
+        pack *l=subtree(root->left,mxsize);
+        pack *r=subtree(root->right,mxsize);
+        if(l->bst==1 and r->bst==1 and l->max<root->data and r->min>root->data){
+            pack*h=new pack(root->data);
+            h->size=l->size+r->size+1;
+           
+            h->min=l->min;
+            h->max=r->max;
+           
+            mxsize=max(mxsize,h->size);
+            return h;
+        }
+        else{
+            l->bst=0;
+            return l;
+        }    
+    }   
+}
+
+int main()
+{
+  node*root=new node(10);
+  root->left=new node(21);
+  root->left->left=new node(12);
+  root->left->right=new node(19);
+  root->right=new node(30);
+  root->right->left=new node(20);
+  root->right->left->left=new node(15);
+  root->right->left->right=new node(25);
+  root->right->right=new node(40);
+
+  queue<node*>q;
+  q.push(root);
+  cout<<"bst : ";
+  level(q);
+  cout<<endl<<"max size subtree bst : ";
+  int mxsize=1;
+  subtree(root,mxsize);
+  cout<<mxsize<<endl;
+
+}
