@@ -1,0 +1,87 @@
+
+*** assign right pointer to each node of each level ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<queue>
+#include<map>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right,*next;  
+   node(int val){
+    data=val;
+    next=left=right=NULL;
+   }
+};
+
+void level(queue<node*>q){
+    if(q.empty())
+     return;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+void level1(queue<node*>q){
+    if(q.empty())
+     return;
+
+    if(q.front()->next==NULL)
+     cout<<0<<" ";
+    else
+     cout<<q.front()->next->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level1(q);
+}
+
+int main()
+{
+    node *root;
+    queue<node*>q;
+    root=new node(1);     
+    root->left=new node(2);
+    root->left->left=new node(4);
+    root->left->right=new node(5);
+    root->right=new node(3);
+    root->right->right=new node(7);
+    root->right->left=new node(6);
+
+    q.push(root);
+    level(q);
+    q.pop();
+    cout<<endl;
+    q.push(root);
+
+    while(!q.empty()){
+        int n=q.size();
+        while(n>0){
+            n--;
+            node*temp=q.front();
+            q.pop();
+            if(n>0)
+             temp->next=q.front();
+            if(temp->left)
+             q.push(temp->left);
+            if(temp->right)
+             q.push(temp->right);
+        }
+
+    }
+    q.push(root);
+    level1(q);
+
+}
+
