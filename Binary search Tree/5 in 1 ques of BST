@@ -1,0 +1,133 @@
+
+*** find - check for bst , k large ,k small, min diffrece b/w nodes , sum of tree ***
+*** Time complexity : O(N)
+*** Space complexity : O(N)
+
+
+#include<iostream>
+#include<queue>
+#include<climits>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;
+
+};
+
+node* bst(node *&root,int val){
+    if(root==NULL){
+        node*temp=new node;
+        temp->data=val;
+        temp->left=NULL;
+        temp->right=NULL;
+        return temp;
+    }
+    if(val<root->data)
+       root->left=bst(root->left,val);
+    else
+      root->right=bst(root->right,val);
+    return root;
+}
+
+void level(queue<node*>q){
+    if(q.empty())
+     return;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+int checkbst(node*root,int pre){
+    if(root==NULL)
+     return 1;
+    
+    int l=checkbst(root->left,pre);
+    if(l==0)
+     return 0;
+    if(root->data<pre)
+     return 0;
+    pre=root->data;
+    int m=checkbst(root->right,pre);
+    return m;
+    
+}
+
+int mindiff(node*root,int &pre){
+    if(root->left==NULL or root->right==NULL)
+     return 0;
+    
+    mindiff(root->left,pre);
+    pre=min(pre,min(abs(root->data-root->left->data),abs(root->data-root->right->data)));
+    mindiff(root->right,pre);
+    pre=min(pre,min(abs(root->data-root->left->data),abs(root->data-root->right->data)));
+    return pre;
+}
+
+void sum(node *root,int &s,int &k){
+    if(root==NULL)
+     return;
+    
+    sum(root->left,s,k);
+    if(k>0){
+        k--;
+        s=s+root->data;
+    }
+    sum(root->right,s,k);   
+}
+
+int ksmall(node *root,int &s,int &k){
+    if(root==NULL)
+     return 0;
+    
+    ksmall(root->left,s,k);
+    if(k>0){
+        k--;
+        s=root->data;
+    }
+    ksmall(root->right,s,k);
+    return s;
+}
+
+int klarge(node *root,int &s,int &k){
+    if(root==NULL)
+     return 0;
+    
+    klarge(root->right,s,k);
+    if(k>0){
+        k--;
+        s=root->data;
+    }
+    klarge(root->left,s,k);
+    return s;
+}
+
+int main()
+{
+    int arr[]={20,30,10,14,25,35,2,1,3};
+    node*root=NULL;
+    queue<node*>q;
+    for(int i=0;i<sizeof(arr)/4;i++)
+     root=bst(root,arr[i]);
+    q.push(root);
+    level(q); 
+    int pre=INT_MAX,s=0,k=3;
+    cout<<endl<<"is BST : "<<checkbst(root,INT_MIN);
+    mindiff(root,pre);
+    cout<<endl<<"minimum diffrence b/w two nodes : "<<pre;
+    sum(root,s,k);
+    cout<<endl<<"sum of first k minimum : "<<s;
+    s=0,k=3;
+    ksmall(root,s,k);
+    cout<<endl<<"k small : "<<s;
+    s=0,k=3;
+    klarge(root,s,k);
+    cout<<endl<<"k large : "<<s;
+
+}
+
