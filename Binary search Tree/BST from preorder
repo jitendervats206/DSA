@@ -1,0 +1,54 @@
+
+*** Make tree from preorder ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<climits>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;
+};
+
+node* prebst(vector<int>&preorder,int &index,int l,int r){
+    if(index==preorder.size() or preorder[index]<l or preorder[index]>r)
+     return NULL;
+
+    node*root=new node;
+    root->data=preorder[index];
+    root->left=NULL;
+    root->right=NULL;
+    index++;
+    root->left=prebst(preorder,index,l,root->data);
+    root->right=prebst(preorder,index,root->data,r);
+    return root;
+}
+
+void level(queue<node*>q){
+    if(q.empty())
+     return;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+int main()
+{
+    node*root=NULL,*root1=NULL;
+    queue<node*>q;
+    int left=INT_MIN,right=INT_MAX,index=0; 
+    vector<int>preorder={8,5,1,7,10,12};
+    root=prebst(preorder,index,left,right);
+    q.push(root);
+    cout<<"preorder bst : ";
+    level(q);
+}
