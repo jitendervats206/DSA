@@ -1,0 +1,99 @@
+
+*** encode data according to huffman ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+class node{
+  public:
+   char c;
+   int f;
+   node*left,*right;
+    node(int x,char a){
+      f=x;
+      c=a;
+      left=right=NULL;
+    }
+};
+
+void preorder(node*root,string str,vector<string>&v){
+  if(root==NULL)
+  return;
+
+  if(!root->left and !root->right)
+   v.push_back(str);
+ 
+  str.push_back('0');
+  preorder(root->left,str,v);
+  str.pop_back();
+  str.push_back('1');
+  preorder(root->right,str,v);
+  str.pop_back();
+}
+
+int main()
+{
+  string s="abcdef",str;
+  int freq[]={5,9,12,13,16,45};
+  vector<string>v;
+  priority_queue<int,vector<int>,greater<int>>mn;
+  unordered_map<int,node*>m1;
+  unordered_map<int,char>m2;
+  node*root;
+
+  for(int i=0;i<sizeof(freq)/4;i++){
+    mn.push(freq[i]);
+    m2[freq[i]]=s[i];
+  }
+
+  while(mn.size()>1){
+    int x=mn.top();
+    mn.pop();
+    int y=mn.top();
+    mn.pop();
+    int z=x+y;
+    node*temp=new node(z,'#');
+    root=temp;
+
+    m1[z]=temp;
+    if(x<=y){
+      if(m1[x]!=NULL)
+       temp->left=m1[x];
+      else{
+       temp->left=new node(x,m2[x]);
+       m1[x]=temp->left;
+      }
+
+      if(m1[y]!=NULL)
+       temp->right=m1[y];
+      else{
+       temp->right=new node(y,m2[y]);
+       m1[y]=temp->right;
+     }
+    }
+
+    else if(y<x){
+      if(m1[y]!=NULL)
+       temp->left=m1[y];
+      else{
+       temp->left=new node(y,m2[y]);
+       m1[y]=temp->left;
+      }
+      if(m1[x]!=NULL)
+       temp->right=m1[x];
+      else{
+       temp->right=new node(x,m2[x]);
+       m1[x]=temp->right;
+     }
+    }
+    mn.push(z);
+  }
+
+  preorder(root,str,v);
+  for(int i=0;i<v.size();i++)
+   cout<<v[i]<<" ";
+}
