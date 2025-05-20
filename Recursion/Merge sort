@@ -1,0 +1,64 @@
+
+*** merge sort on array ***
+*** Time complexity : O(N)
+*** Space complexity : O()
+
+#include<iostream>
+using namespace std;
+void merge(int arr[],int start,int mid,int end){
+  int index=0;
+  int left=start,right=mid+1;
+  int temp[end-start+1];
+
+  while(left<=mid and right<=end){
+    if(arr[left]<=arr[right]){
+      temp[index]=arr[left];
+      index++;
+      left++;
+    }
+    else{
+      temp[index]=arr[right];
+      right++;
+      index++;
+    }
+  }
+
+  while(left<=mid){
+    temp[index]=arr[left];
+    index++;
+    left++;
+  }
+  while(right<=end){
+    temp[index]=arr[right];
+    index++;
+    right++;
+  }
+
+  for(int i=0;i<sizeof(temp)/4;i++){
+    arr[start]=temp[i];
+    start++;
+  }
+}
+
+void divide(int arr[],int start,int end){
+  if(start==end)
+  return;
+
+  int mid=start+(end-start)/2;
+  divide(arr,start,mid);
+  divide(arr,mid+1,end);
+  merge(arr,start,mid,end);
+}
+
+int main()
+{
+  int arr[]={6,4,7,2,9,8,3,5,1};
+  int start,end;
+  
+  start=0;
+  end=(sizeof(arr)/4)-1;
+  divide(arr,start,end);
+  for(int i=0;i<sizeof(arr)/4;i++)
+   cout<<arr[i]<<" ";
+
+}
