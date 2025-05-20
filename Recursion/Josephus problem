@@ -1,0 +1,49 @@
+
+*** Josephus problem ***
+*** Time complexity : O(N)
+*** Space complexity : O(N)
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+void jp(int arr[],vector<int> &m,int x,int index,int k,int n){
+    if(x==k-1 and m[index]==0){
+      m[index]=1;
+      x=0;
+      n=n-1;
+    }
+
+    if(m[index]==0){
+     index=index+1;
+     if(index==m.size())
+     index=0;
+    }
+    else{
+      while(m[index]!=0){
+       index=index+1;
+      if(index==m.size())
+       index=0;
+      }
+     x--;
+    }
+   
+    if(n==1){
+      for(int i=0;i<m.size();i++)
+       if(m[i]==0)
+        cout<<i;
+      return;
+    }
+    jp(arr,m,x+1,index,k,n);
+  
+}
+
+int main()
+{
+   int arr[]={0,1,2,3,4,5};
+   int index=0,k=2;
+   
+   vector<int> m(sizeof(arr)/4,0);
+   jp(arr,m,0,index,k,sizeof(arr)/4);
+  
+}
