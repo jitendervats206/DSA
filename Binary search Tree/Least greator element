@@ -1,0 +1,49 @@
+
+*** find  the least greator element on right ***
+*** Time complexity : O(N)
+*** Space complexity : O(1)
+
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;
+};
+
+node* bst(node *&root,int val,int &suc){
+    if(root==NULL){
+        node*temp=new node;
+        temp->data=val;
+        temp->left=NULL;
+        temp->right=NULL;
+        return temp;
+    }
+    if(val<root->data){
+       suc=root->data;
+       root->left=bst(root->left,val,suc);
+    }
+    else
+      root->right=bst(root->right,val,suc);
+    return root;
+}
+
+int main()
+{
+    node*root=NULL;
+    int suc=0;
+    int arr[]={32,63,43,3,91,93,25,80,28};
+    for(int i=(sizeof(arr)/4)-1;i>=0;i--){
+       suc=0;
+       root=bst(root,arr[i],suc);
+       if(suc!=0)
+        arr[i]=suc;
+       else 
+        arr[i]=-1;
+    }
+    cout<<"least greator elemnt right : ";
+    for(int i=0;i<sizeof(arr)/4;i++)
+     cout<<arr[i]<<" ";
+
+}
