@@ -1,0 +1,54 @@
+
+*** rearrange string character ***
+*** Time complexity : O(N)
+*** Space complexity : 0(N)
+
+
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+  string s="aaaabc",str;
+  pair<int,char>x,y;
+  int q=0;
+  priority_queue<pair<int,char>>mx;
+
+  for(int i=0;i<s.size();i++){
+    q++;
+    if(s[i+1]!=s[i]){
+      mx.push({q,s[i]});
+      q=0;
+    }
+  }
+
+  while(!mx.empty()){
+    str.push_back(mx.top().second);
+    x=mx.top();
+    x.first--;
+    mx.pop();
+    if(!mx.empty()){
+     str.push_back(mx.top().second);
+     y=mx.top();
+     y.first--;
+     mx.pop();
+    }
+
+    if(x.first!=0)
+     mx.push(x);
+    if(y.first!=0)
+     mx.push(y);
+    if(mx.size()==1 and str.back()==mx.top().second)
+     break;
+
+  }
+   
+  if(mx.empty())
+   cout<<str;
+  else
+   cout<<-1;
+
+}
+
+
