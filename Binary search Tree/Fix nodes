@@ -1,0 +1,87 @@
+
+*** Fix two wrong nodes by swapping ***
+*** Time complexity : O(N)
+*** Space complexity : O(N)
+
+
+#include<iostream>
+#include<queue>
+#include<vector>
+using namespace std;
+class node{
+  public:
+   int data;
+   node *left,*right;
+   node(int val){
+    data=val;
+    left=right=NULL;
+   }
+};
+
+void level(queue<node*>q){
+    if(q.empty())
+     return;
+
+    cout<<q.front()->data<<" ";
+    if(q.front()->left)
+     q.push(q.front()->left);
+    if(q.front()->right)
+     q.push(q.front()->right);
+    q.pop();
+    level(q);
+}
+
+void inorder(node*root,node*&curr,node*&prev,node* &first,node*&second){
+    if(root==NULL)
+     return;
+
+    inorder(root->left,curr,prev,first,second);
+    
+    if(curr!=NULL)
+     curr=root;
+    if(curr!=NULL and prev!=NULL){
+       if(curr->data<prev->data){
+        if(first==NULL)                        
+         first=prev;
+        second=curr;
+       }
+    }
+    if(prev!=NULL)
+     prev=root;
+    if(curr==NULL and prev==NULL){
+        curr=root;
+        prev=root;
+    }
+
+    inorder(root->right,curr,prev,first,second);
+
+}
+
+int main()
+{
+    node*root=NULL;
+    queue<node*>q;
+    root=new node(10);
+    root->left=new node(4);
+    root->left->left=new node(2);
+    root->left->right=new node(9);
+    root->left->right->left=new node(6);
+    root->left->right->right=new node(7);
+    root->right=new node(15);
+    root->right->left=new node(12);
+    root->right->right=new node(18);
+
+    q.push(root);
+    cout<<"before fix : ";
+    level(q);
+    q.pop();
+
+    node*first=NULL,*second=NULL,*curr=NULL,*prev=NULL;
+    inorder(root,curr,prev,first,second);
+
+    swap(first->data,second->data);
+    cout<<endl<<"after fix : ";
+    q.push(root);
+    level(q);
+
+}
