@@ -1,0 +1,55 @@
+
+*** check leaf nodes at same level ***
+*** Time complexity : O(N)
+*** Space complexity : 0(1)
+
+
+#include<iostream>
+using namespace std;
+class node{
+  public:
+  int data;
+  node *left,*right;
+};
+
+node *input(){
+    int x;
+    cin>>x;
+    if(x<0)
+     return 0;
+
+    node *temp=new node;
+    temp->data=x;
+    cout<<"enter "<<x<<" left node : ";
+    temp->left=input();
+    cout<<"enter "<<x<<" right node : ";
+    temp->right=input();
+    return temp;
+}
+
+int level(node*root,int x,int l){
+    if(root==NULL)
+     return 0;
+    
+    int a=level(root->left,x,l+1);
+    int b=level(root->right,x,l+1);
+
+    if(!root->left and !root->right){
+        if(x==-1){
+         x=l;
+         return 1;}
+        else if(l!=x)
+         return 0;
+    }
+    return a and b;
+    
+}
+
+int main()
+{ 
+    node *root;
+    cout<<"enter root node : ";
+    root=input();
+    cout<<level(root,-1,0);
+}
+
