@@ -1,0 +1,56 @@
+
+
+*** To find chepaest flight route with k stops ***
+*** Time complexity : O(N)
+*** Space complexity : 0(NLogN)
+
+
+#include<iostream>
+#include<vector>
+#include<climits>
+#include<queue>
+using namespace std;
+void dfs(int n,int wt,int count,int k,int dest,vector<int>&step,vector<int>&visited,vector<pair<int,int>>adj[]){
+    visited[n]=1;
+    if(n==dest){
+        step[count]=min(step[count],wt);
+        visited[n]=0;
+        return;
+    } 
+
+    for(int i=0;i<adj[n].size();i++){
+        if(visited[adj[n][i].first]==0){
+         count++;
+         wt=wt+adj[n][i].second;
+         dfs(adj[n][i].first,wt,count,k,dest,step,visited,adj);
+         wt=wt-adj[n][i].second;
+         count--;
+        }
+    }
+    visited[n]=0;
+}
+
+int main()
+{
+    int nodes=3,count=-1,k=1,dest=2;
+    vector<int>ans,step(nodes,INT_MAX),visited(nodes,0);
+    vector<pair<int,int>>adj[nodes];
+    vector<vector<pair<int,int>>>v={{{1,100},{2,500}},{{2,100}}};
+
+    for(int i=0;i<v.size();i++)
+       for(int j=0;j<v[i].size();j++)
+        adj[i].push_back(v[i][j]);
+ 
+    cout<<"adj list :"<<endl;
+    for(int i=0;i<(sizeof(adj)/4)/(sizeof(adj[0])/4);i++){
+      cout<<i<<"->";
+      for(int j=0;j<adj[i].size();j++)
+       cout<<"("<<adj[i][j].first<<","<<adj[i][j].second<<") ";
+      cout<<endl;
+    }
+    
+    dfs(0,0,count,k,dest,step,visited,adj);
+    for(int i=0;i<step.size();i++)
+     cout<<step[i]<<" ";
+   
+}
