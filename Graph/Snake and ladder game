@@ -1,0 +1,63 @@
+
+*** find min dice swaps to win game ***
+*** Time complexity : O(N)
+*** Space complexity : 0(NLogN)
+
+
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<unordered_map>
+using namespace std;
+int main()
+{
+    int count=0,i=1;
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>l;
+    unordered_map<int,int>m;
+    m[27]=1;
+    m[21]=9;
+    m[17]=4;
+    m[19]=7;
+    
+    l.push({11,26});
+    l.push({3,22});
+    l.push({5,8});
+    l.push({20,29});
+    
+    while(i!=30){
+      if(!l.empty()){
+       int x=l.top().first;
+       while(i+6<x){
+        int a=6;
+        while(m[i+a]>0)
+         a--;
+        i=i+a;
+        count++;
+       }
+       if(i!=x){
+        i=i+(x-i);
+        count++;
+       }
+       i=l.top().second;
+       while(l.top().first<i and !l.empty())
+        l.pop();
+      } 
+      else{
+        int x=30;
+        while(i+6<x){
+         int a=6;
+         while(m[i+a]>0)
+          a--;
+          i=i+a;
+          count++;
+        }
+       if(i!=x){
+        i=i+(x-i);
+        count++;
+       }
+      }
+    }
+
+  cout<<i<<" "<<count;
+
+}
