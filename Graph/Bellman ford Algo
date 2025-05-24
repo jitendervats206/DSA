@@ -1,0 +1,51 @@
+
+
+*** impliment bellman ford algo ***
+*** Time complexity : O(N)
+*** Space complexity : 0(NLogN)
+
+
+
+#include<iostream>
+#include<vector>
+#include<climits>
+#include<queue>
+using namespace std; 
+int main()
+{ 
+    int nodes=3;
+    int s=2;
+    bool flag=false;
+    vector<int>path(nodes,INT_MAX);
+    vector<vector<int>>v= {{0,1,5},{1,0,3},{1,2,-1},{2,0,1}};
+    
+    cout<<"adj matrix :"<<endl;
+    for(int i=0;i<v.size();i++){
+       for(int j=0;j<v[i].size();j++)
+        cout<<v[i][j]<<" ";
+     cout<<endl;
+    }
+
+    path[s]=0;
+    while(nodes!=1){
+        nodes--;
+        for(int i=0;i<v.size();i++){
+            if(path[v[i][0]]==INT_MAX)
+             continue;
+            path[v[i][1]]=min(path[v[i][0]]+v[i][2],path[v[i][1]]);
+        }
+    }
+    
+    for(int i=0;i<v.size();i++)
+     if(path[v[i][0]]+v[i][2]<path[v[i][1]])
+      flag=true;
+
+    if(flag==true)
+     cout<<"-ve cycle present";
+    else{
+     cout<<"path : ";
+     for(int i=0;i<path.size();i++)
+      cout<<path[i]<<" ";
+    }
+     
+}
