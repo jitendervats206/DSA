@@ -1,0 +1,55 @@
+
+*** To find loop in undirected graph using BFS ***
+*** Time complexity : O(N)
+*** Space complexity : 0(NLogN)
+
+
+
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+int main()
+{
+    int nodes=6;
+    vector<int>visited(nodes,0);
+    queue<pair<int,int>>q;
+    bool flag=false;
+    vector<int>adj[nodes];
+    vector<vector<int>>v={{1,5},{0,2},{3,1},{4,2},{5,3},{4,1}};
+
+    for(int i=0;i<v.size();i++)
+       for(int j=0;j<v[i].size();j++)
+        adj[i].push_back(v[i][j]);
+ 
+    cout<<"adj list :"<<endl;
+    for(int i=0;i<(sizeof(adj)/4)/(sizeof(adj[0])/4);i++){
+      cout<<i<<"->";
+      for(int j=0;j<adj[i].size();j++)
+       cout<<adj[i][j]<<" ";
+      cout<<endl;
+    }
+
+    q.push({0,-1});
+    visited[0]=1;
+    while(!q.empty()){
+        int x=q.front().first;
+        int y=q.front().second;
+        q.pop();
+        for(int i=0;i<adj[x].size();i++){
+            if(visited[adj[x][i]]==1 and adj[x][i]!=y)
+             flag=true;
+            else if(visited[adj[x][i]]!=1){
+             q.push({adj[x][i],x});
+             visited[adj[x][i]]=1;
+            }
+        }
+    }
+    
+    if(flag==true)
+     cout<<1;
+    else
+     cout<<0;
+   
+}
+
