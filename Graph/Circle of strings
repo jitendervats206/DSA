@@ -1,0 +1,51 @@
+
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+void dfs(vector<int> adj[],vector<int>&visited,int k){
+    visited[k]=1;
+    for(int i=0;i<adj[k].size();i++)
+      if(visited[adj[k][i]]==0)
+       dfs(adj,visited,adj[k][i]);
+}
+
+int main()
+{
+    vector<string>v={"abc","bcd","cdf"};
+    vector<int>in(26,0),out(26,0),visited(26,0);
+    vector<int>adj[26];
+    bool flag=true;
+   
+    for(int i=0;i<v.size();i++){
+      string s=v[i];
+      adj[s[0]-97].push_back(s[s.size()-1]-97);
+      out[s[0]-97]++;
+      in[s[s.size()-1]-97]++;
+    }
+
+   for(int i=0;i<26;i++)
+    if(adj[i].size()>0){
+     cout<<i<<"->";
+     for(int j=0;j<adj[i].size();j++)
+      cout<<adj[i][j]<<" ";
+      cout<<endl;
+    }
+   
+   for(int i=0;i<in.size();i++)
+    if(in[i]!=out[i])
+     flag=false;
+     
+    string a=v[0];
+    dfs(adj,visited,a[0]-97);
+
+    for(int i=0;i<in.size();i++)
+     if(in[i]>0 and visited[i]==0)
+      flag=false;
+    
+    if(flag==true)
+     cout<<1;
+    else 
+     cout<<0;
+}
