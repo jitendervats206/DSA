@@ -1,0 +1,54 @@
+
+
+
+*** find time to compete course ***
+*** Time complexity : O(N)
+*** Space complexity : 0(NLogN)
+
+
+
+#include<iostream>
+#include<vector>
+#include<stack>
+using namespace std;
+void dfs(vector<int> adj[],vector<int>&visited,vector<int>&time,int &count,int k){
+    visited[k]=1;
+    
+    for(int j=0;j<adj[k].size();j++)
+     if(visited[adj[k][j]]!=1)
+      dfs(adj,visited,time,count,adj[k][j]);
+    if(adj[k].size()>0)
+     count=count+time[k];
+    else
+     count=max(count,time[k]); 
+}
+
+int main()
+{
+    int nodes=5,count=0;
+    vector<int>visited(nodes,0),time(nodes,0);
+    stack<int>q;
+    vector<int>adj[nodes];
+    vector<vector<int>>v={{},{},{},{2},{0,1,2,3}};
+    time={1,2,3,4,5};
+
+    for(int i=0;i<v.size();i++)
+       for(int j=0;j<v[i].size();j++)
+        adj[i].push_back(v[i][j]);
+ 
+    cout<<"adj list :"<<endl;
+    for(int i=0;i<(sizeof(adj)/4)/(sizeof(adj[0])/4);i++){
+      cout<<i<<"->";
+      for(int j=0;j<adj[i].size();j++)
+       cout<<adj[i][j]<<" ";
+      cout<<endl;
+    }
+
+    for(int i=0;i<visited.size();i++)
+        if(visited[i]==0)
+         dfs(adj,visited,time,count,i);
+    cout<<"time : "<<count;
+
+}
+
+
