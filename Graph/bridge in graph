@@ -1,0 +1,48 @@
+
+*** bridge in graph ***
+*** Time complexity : O(N)
+*** Space complexity : 0(NLogN)
+
+
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+void dfs(int node,int parent,int count,vector<int>&mx,vector<int>&mn,vector<int>&visited,vector<int> adj[]){
+    mx[node]=mn[node]=count;
+    visited[node]=1;
+   
+    for(int i=0;i<adj[node].size();i++){
+      if(adj[node][i]==parent)
+       continue;
+      else if(visited[adj[node][i]])
+       mn[node]=min(mn[adj[node][i]],mn[node]);
+      else{
+        count++;
+        dfs(adj[node][i],node,count,mx,mn,visited,adj);
+        mn[node]=min(mn[adj[node][i]],mn[node]);
+        if(mx[node]<mn[adj[node][i]])
+         cout<<"["<<node<<","<<adj[node][i]<<"] ";
+      }
+    }
+}
+
+int main()
+{ 
+    int nodes=13;
+    vector<int>mx(nodes),mn(nodes),visited(nodes,0);
+    vector<int>adj[nodes];
+    vector<vector<int>>v={{1,3},{0,2},{1,4,5},{0,4},{3,2},{2,6},{5,7,8},{6,8},{6,7,9},{8,11,10},{9,12},{9,12},{11,10}};
+    
+    for(int i=0;i<v.size();i++)
+      for(int j=0;j<v[i].size();j++)
+       adj[i].push_back(v[i][j]);
+
+    for(int i=0;i<v.size();i++){
+      cout<<i<<"->";
+      for(int j=0;j<v[i].size();j++)
+       cout<<adj[i][j]<<" ";
+      cout<<endl;
+    }
+    dfs(0,-1,0,mx,mn,visited,adj);
+}
