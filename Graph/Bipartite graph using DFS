@@ -1,0 +1,79 @@
+
+*** To check bipartite graph using DFS***
+*** Time complexity : O(N)
+*** Space complexity : 0(NLogN)
+
+
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+void dfs(vector<int> adj[],vector<int>&visited,vector<int>&color,queue<int>&q1,queue<int>&q2,bool &flag,int k,int x){
+    if(visited[k]==0){
+     x=!x;
+     if(x==0)
+        q1.push(k);
+     else
+        q2.push(k);
+     visited[k]=1;
+     color[k]=x;
+    }
+
+    x=!x;
+    for(int j=0;j<adj[k].size();j++){
+        if(visited[adj[k][j]]==0){
+          for(int t=0;t<adj[adj[k][j]].size();t++)
+          if(color[ adj[adj[k][j]] [t] ]==x){
+          flag=true;
+          return;}  
+
+          if(x==0)
+           q1.push(adj[k][j]);
+          else
+           q2.push(adj[k][j]);
+          visited[adj[k][j]]=1;
+          color[adj[k][j]]=x;
+          dfs(adj,visited,color,q1,q2,flag,adj[k][j],x);
+        } 
+    }
+}
+
+int main()
+{
+    int nodes=9;
+    vector<int>visited(nodes,0),color(nodes,-1);
+    queue<int>q1,q2;
+    bool flag=false;
+    vector<int>adj[nodes];
+    vector<vector<int>>v={{1},{0,2,3},{1},{1,4,5,8},{3},{3,6},{5,7},{8,6},{3,7}};
+
+    for(int i=0;i<v.size();i++)
+       for(int j=0;j<v[i].size();j++)
+        adj[i].push_back(v[i][j]);
+ 
+    cout<<"adj list :"<<endl;
+    for(int i=0;i<(sizeof(adj)/4)/(sizeof(adj[0])/4);i++){
+      cout<<i<<"->";
+      for(int j=0;j<adj[i].size();j++)
+       cout<<adj[i][j]<<" ";
+      cout<<endl;
+    }
+
+    dfs(adj,visited,color,q1,q2,flag,0,1);
+
+    if(flag==false){
+        cout<<"red : ";
+        while(!q1.empty()){
+           cout<<q1.front()<<" ";
+           q1.pop();
+        }
+        cout<<endl<<"blue : ";
+        while(!q2.empty()){
+           cout<<q2.front()<<" ";
+           q2.pop();
+        }
+    }
+      
+    else
+     cout<<"not possible";
+}
