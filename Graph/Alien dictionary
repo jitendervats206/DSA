@@ -1,0 +1,56 @@
+
+*** To find aliean dictionary ***
+*** Time complexity : O(N)
+*** Space complexity : 0(NLogN)
+
+
+#include<iostream>
+#include<vector>
+#include<stack>
+using namespace std;
+void dfs(vector<int> adj[],vector<int>&visited,stack<char>&q,int k){
+    visited[k]=1;
+    for(int j=0;j<adj[k].size();j++)
+     if(visited[adj[k][j]]!=1)
+      dfs(adj,visited,q,adj[k][j]); 
+    q.push(k+97);
+}
+
+int main()
+{
+    vector<string>str={"baa","abcd","abca","cab","cad"};
+    stack<char>q;
+    int nodes=4;
+    vector<int>visited(nodes,0);
+    vector<int>adj[nodes];
+
+    for(int i=0;i<str.size()-1;i++){
+        int a=0,b=0;
+        string str1=str[i];
+        string str2=str[i+1];
+        while(a<str1.size() and b<str2.size()){
+          if((str1[a]<str2[b]) or (str1[a]>str2[b]) ){
+            adj[str1[a]-97].push_back(str2[b]-97);
+            break;
+          }
+          a++;b++;
+        }  
+    }
+ 
+    cout<<"adj list :"<<endl;
+    for(int i=0;i<(sizeof(adj)/4)/(sizeof(adj[0])/4);i++){
+      cout<<i<<"->";
+      for(int j=0;j<adj[i].size();j++)
+       cout<<adj[i][j]<<" ";
+      cout<<endl;
+    }
+
+    for(int i=0;i<visited.size();i++)
+        if(visited[i]==0)
+         dfs(adj,visited,q,i);
+    while(!q.empty()){
+        cout<<q.top();
+        q.pop();
+    }
+}
+
