@@ -1,0 +1,43 @@
+
+
+*** implimanet floyd warshell algo ***
+*** Time complexity : O(N)
+*** Space complexity : 0(NLogN)
+
+
+
+#include<iostream>
+#include<vector>
+#include<climits>
+using namespace std;
+int main()
+{
+  int nodes=4,k=0;
+  vector<vector<int>>path(nodes);
+  path[0]={0,INT_MAX,2,4};
+  path[1]={3,0,INT_MAX,10};
+  path[2]={INT_MAX,INT_MAX,0,1};
+  path[3]={6,4,INT_MAX,0};
+
+  while(k<nodes){
+    for(int i=0;i<path.size();i++){
+     for(int j=0;j<path[i].size();j++){
+      if(path[i][k]==INT_MAX or path[k][j]==INT_MAX)
+       continue;
+      else if(path[i][k]+path[k][j]<path[i][j])
+        path[i][j]=path[i][k]+path[k][j];
+     }
+    }
+     k++;
+  }
+
+  for(int i=0;i<path.size();i++){
+    for(int j=0;j<path[i].size();j++){
+      if(path[i][j]==INT_MAX)
+       path[i][j]=-1;
+      cout<<path[i][j]<<" ";
+    }
+    cout<<endl;
+  }
+}
+
