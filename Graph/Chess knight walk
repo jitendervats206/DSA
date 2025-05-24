@@ -1,0 +1,51 @@
+
+*** To find knight walk***
+*** Time complexity : O(N)
+*** Space complexity : 0(NLogN)
+
+
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+int main()
+{
+  vector<vector<int>>mat(8,vector<int>(8,0));
+  vector<vector<int>>visited(8,vector<int>(8,0));
+  queue<pair<pair<int,int>,int>>q;
+  int row[]={1,1,-1,-1,2,2,-2,-2};
+  int col[]={-2,2,-2,2,-1,1,-1,1};
+
+  mat[1][4]=1;
+  mat[7][1]=2;
+
+  for(int i=0;i<mat.size();i++){
+    for(int j=0;j<mat[i].size();j++)
+     cout<<mat[i][j]<<" ";
+    cout<<endl;
+  }
+
+  q.push({{1,4},0});  
+  while(!q.empty()){
+    int x=q.front().first.first;
+    int y=q.front().first.second;
+    int z=q.front().second;
+    q.pop(); 
+
+    visited[x][y]=1;
+    for(int k=0;k<8;k++){
+      int r=x+row[k];
+      int c=y+col[k];
+      
+       if((r>-1 and r<mat.size()) and (c<mat[k].size() and c>-1) and visited[r][c]==0){
+        if(mat[r][c]!=-1)
+         q.push({{r,c},z+1});
+        if(mat[r][c]==2){
+            cout<<z+1;
+            break;
+        }
+       } 
+    }
+  }
+
+}
