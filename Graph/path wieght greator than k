@@ -1,0 +1,55 @@
+
+*** To find path wieght greator than k ***
+*** Time complexity : O(N)
+*** Space complexity : 0(NLogN)
+
+
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+void dfs(int n,int &count,int k,vector<int>&ans,vector<int>&visited,vector<pair<int,int>>adj[]){
+    visited[n]=1;
+
+    for(int i=0;i<adj[n].size();i++){
+        if(visited[adj[n][i].first]==0){
+         count=count+adj[n][i].second;
+         ans.push_back(adj[n][i].first);
+         dfs(adj[n][i].first,count,k,ans,visited,adj);
+         count=count-adj[n][i].second;
+         ans.pop_back();
+        }
+    }
+
+    visited[n]=0;
+    if(count>=k){
+     for(int i=0;i<ans.size();i++)
+      cout<<ans[i]<<" ";
+     cout<<endl;
+    }   
+}
+
+int main()
+{
+    int nodes=9,count=0,k=58;
+    vector<int>ans,visited(nodes,0);
+    vector<pair<int,int>>adj[nodes];
+    vector<vector<pair<int,int>>>v={{{1,4},{7,8}},{{0,4},{7,11},{2,8}},{{1,8},{5,4},{8,2},{3,7}},{{2,7},{5,14},{4,9}},{{3,9},{5,10}},{{6,2},{2,4},{4,10},{3,14}},{{8,6},{7,1},{5,2}},{{8,7},{6,1},{0,8},{1,11}},{{7,7},{6,6},{2,2}}};
+
+    for(int i=0;i<v.size();i++)
+       for(int j=0;j<v[i].size();j++)
+        adj[i].push_back(v[i][j]);
+ 
+    cout<<"adj list :"<<endl;
+    for(int i=0;i<(sizeof(adj)/4)/(sizeof(adj[0])/4);i++){
+      cout<<i<<"->";
+      for(int j=0;j<adj[i].size();j++)
+       cout<<"("<<adj[i][j].first<<","<<adj[i][j].second<<") ";
+      cout<<endl;
+    }
+
+    ans.push_back(0);
+    dfs(0,count,k,ans,visited,adj);
+   
+}
+
